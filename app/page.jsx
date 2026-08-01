@@ -1,3 +1,4 @@
+import Pricing from "@/components/pricing";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -122,7 +123,7 @@ export default function Home() {
 
           <div>
             {/* Pricing Table */}
-
+            <Pricing/>
             <Card className="mt-12 bg-muted/20 border-emerald-900/30">
               <CardHeader>
                 <CardTitle className="text-xl font-semibold text-white flex items-center">
@@ -202,6 +203,43 @@ export default function Home() {
               );
             })}
           </div>
+        </div>
+      </section>
+      <section className="py-20">
+        <div className="container mx-auto px-4">
+          <Card className="bg-gradient-to-r from-emerald-900/30 to-emerald-950/20 border-emerald-800">
+            <CardContent className="p-8 md:p-12 lg:p-16 relative overflow-hidden">
+              <div>
+                <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+                  Ready to take control of your healthcare?
+                </h2>
+
+                <p className="text-lg text-muted-foreground mb-8">
+                  Join thousands of users who have simplified their healthcare
+                  journey with our platform. Get started today and experience
+                  healthcare the way it should be.
+                </p>
+
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <Button
+                    size="lg"
+                    className="bg-emerald-600 text-white hover:bg-emerald-700"
+                    asChild
+                  >
+                    <Link href="/sign-up">Sign Up Now</Link>
+                  </Button>
+                  <Button
+                    asChild
+                    variant="outline"
+                    size="lg"
+                    className="border-emerald-700/30 hover:bg-muted/80"
+                  >
+                    <Link href="/pricing">View Pricing</Link>
+                  </Button>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </section>
     </div>
