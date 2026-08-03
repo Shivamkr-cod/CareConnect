@@ -19,8 +19,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import useFetch from "@/hooks/use-fetch"; // change to useFetch if that's your filename
 import { setUserRole } from "@/actions/onboarding";
+import { SPECIALTIES } from "@/lib/specialities";
 
 const doctorFormSchema = z.object({
   specialty: z.string().min(1, "Specialty is required"),
@@ -40,13 +42,9 @@ const doctorFormSchema = z.object({
 
 const OnboardingPage = () => {
   const [step, setStep] = useState("choose-role");
-  const router=useRouter();
+  const router = useRouter();
 
-  const {
-    data,
-    loading,
-    fn: submitUserRole,
-  } = useFetch(setUserRole);
+  const { data, loading, fn: submitUserRole } = useFetch(setUserRole);
 
   const {
     register,
@@ -78,7 +76,7 @@ const OnboardingPage = () => {
 
   const onSubmit = async (data) => {
     if (loading) return;
-    
+
     const formData = new FormData();
     formData.append("role", "DOCTOR");
     formData.append("specialty", data.specialty);
@@ -100,9 +98,10 @@ const OnboardingPage = () => {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Patient Card */}
-        <Card 
-        onClick={()=>!loading && handlePatientSelection()}
-        className="border-emerald-900/20 hover:border-emerald-700/40 transition-all">
+        <Card
+          onClick={() => !loading && handlePatientSelection()}
+          className="border-emerald-900/20 hover:border-emerald-700/40 transition-all"
+        >
           <CardContent className="pt-6 pb-6 flex flex-col items-center text-center">
             <div className="p-4 bg-emerald-900/20 rounded-full mb-4">
               <User className="h-8 w-8 text-emerald-400" />
@@ -135,9 +134,10 @@ const OnboardingPage = () => {
         </Card>
 
         {/* Doctor Card */}
-        <Card 
-        onClick={()=>!loading && setStep("doctor-form")}
-        className="border-emerald-900/20 hover:border-emerald-700/40 transition-all">
+        <Card
+          onClick={() => !loading && setStep("doctor-form")}
+          className="border-emerald-900/20 hover:border-emerald-700/40 transition-all"
+        >
           <CardContent className="pt-6 pb-6 flex flex-col items-center text-center">
             <div className="p-4 bg-emerald-900/20 rounded-full mb-4">
               <Stethoscope className="h-8 w-8 text-emerald-400" />
@@ -153,7 +153,7 @@ const OnboardingPage = () => {
             </CardDescription>
 
             <Button
-            disabled={loading}
+              disabled={loading}
               onClick={() => setStep("doctor-form")}
               className="w-full mt-2 bg-emerald-600 hover:bg-emerald-700"
             >
@@ -167,78 +167,127 @@ const OnboardingPage = () => {
 
   if (step === "doctor-form") {
     return (
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 max-w-2xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="space-y-2">
-            <Label htmlFor="specialty">Specialty</Label>
-            <Input
-              id="specialty"
-              {...register("specialty")}
-              placeholder="e.g. Cardiologist"
-            />
-            {errors.specialty && (
-              <p className="text-sm text-red-500">{errors.specialty.message}</p>
-            )}
+      <Card className="border-emerald-900/20">
+        <CardContent className="pt-6">
+          <div className="mb-6">
+            <CardTitle className="text-2xl font-bold text-white mb-2">
+              Complete Your Doctor Profile
+            </CardTitle>
+
+            <CardDescription>
+              Please provide your professional details for verification
+            </CardDescription>
           </div>
-          <div className="space-y-2">
-            <Label htmlFor="experience">Experience (Years)</Label>
-            <Input
-              id="experience"
-              type="number"
-              {...register("experience", { valueAsNumber: true })}
-              placeholder="e.g. 5"
-            />
-            {errors.experience && (
-              <p className="text-sm text-red-500">{errors.experience.message}</p>
-            )}
-          </div>
-        </div>
 
-        <div className="space-y-2">
-          <Label htmlFor="credentialUrl">Credential URL</Label>
-          <Input
-            id="credentialUrl"
-            {...register("credentialUrl")}
-            placeholder="Link to your medical license or credentials"
-          />
-          {errors.credentialUrl && (
-            <p className="text-sm text-red-500">{errors.credentialUrl.message}</p>
-          )}
-        </div>
+          <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
+            <div className="space-y-2">
+              <Label htmlFor="specialty">Medical Speciality</Label>
 
-        <div className="space-y-2">
-          <Label htmlFor="description">About You</Label>
-          <Textarea
-            id="description"
-            {...register("description")}
-            placeholder="Tell us about your medical background and practice..."
-            className="h-32"
-          />
-          {errors.description && (
-            <p className="text-sm text-red-500">{errors.description.message}</p>
-          )}
-        </div>
+              <Select
+                value={specialtyValue}
+                onValueChange={(value) => setValue("specialty", value)}
+              >
+                <SelectTrigger id="specialty">
+                  <SelectValue placeholder="Select your specialty" />
+                </SelectTrigger>
 
-        <div className="flex justify-between">
-          <Button type="button" variant="outline" onClick={() => setStep("choose-role")}>
-            Back
-          </Button>
-          <Button type="submit" disabled={loading} className="bg-emerald-600 hover:bg-emerald-700">
-            {loading ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Submitting...
-              </>
-            ) : (
-              "Complete Profile"
-            )}
-          </Button>
-        </div>
-      </form>
+                <SelectContent>
+                  {SPECIALTIES.map((spec) => {
+                    return (
+                      <SelectItem key={spec.name} value={spec.name}>
+                        <div className="flex items-center gap-2">
+                          <span className="text-emerald-400">{spec.icon}</span>
+                          {spec.name}
+                        </div>
+                      </SelectItem>
+                    );
+                  })}
+                </SelectContent>
+              </Select>
+
+              {errors.specialty && (
+                <p className="text-sm font-medium text-red-500 mt-1">
+                  {errors.specialty.message}
+                </p>
+              )}
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="experience">Years of Experience</Label>
+
+              <Input
+                id="experience"
+                type="number"
+                placeholder="eg. 5"
+                {...register("experience", { valueAsNumber: true })}
+              />
+
+              {errors.experience && (
+                <p className="text-sm font-medium text-red-500 mt-1">
+                  {errors.experience.message}
+                </p>
+              )}
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="credentialUrl">Link to Credential Document</Label>
+              <Input
+                id="credentialUrl"
+                placeholder="https://example.com/my-medical-degree.pdf"
+                {...register("credentialUrl")}
+              />
+              <p className="text-sm text-gray-400">
+                Please provide a link to your medical degree or certification
+              </p>
+              {errors.credentialUrl && (
+                <p className="text-sm font-medium text-red-500 mt-1">
+                  {errors.credentialUrl.message}
+                </p>
+              )}
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="description">Description of Your Services</Label>
+              <Textarea
+                id="description"
+                placeholder="Describe your expertise, services, and approach to patient care..."
+                {...register("description")}
+              />
+              {errors.description && (
+                <p className="text-sm font-medium text-red-500 mt-1">
+                  {errors.description.message}
+                </p>
+              )}
+            </div>
+
+            <div className="flex justify-between items-center pt-4">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setStep("choose-role")}
+                disabled={loading}
+              >
+                Back
+              </Button>
+              <Button
+                type="submit"
+                disabled={loading}
+                className="bg-emerald-600 hover:bg-emerald-700 text-white"
+              >
+                {loading ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Saving...
+                  </>
+                ) : (
+                  "Submit for Verification"
+                )}
+              </Button>
+            </div>
+          </form>
+        </CardContent>
+      </Card>
     );
   }
-
-  return null;
 };
 
 export default OnboardingPage;
