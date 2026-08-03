@@ -2,6 +2,7 @@ import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 import { Badge } from "@/components/ui/badge";
+import Pricing from "@/components/pricing";
 
 const PricingPage = () => {
   return (
@@ -40,7 +41,7 @@ const PricingPage = () => {
 
       <div className="max-w-3xl mx-auto mt-16 text-center">
         <h2 className="text-2xl font-bold text-white mb-2">
-          Questions? We're Here to Help
+          Questions? We&apos;re Here to Help
         </h2>
 
         <p className="text-muted-foreground mb-4">
