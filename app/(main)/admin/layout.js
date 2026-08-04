@@ -1,6 +1,6 @@
 import React from "react";
 import { redirect } from "next/navigation";
-import { ShieldCheck, ArrowLeft } from "lucide-react";
+import { ShieldCheck, ArrowLeft, AlertCircle, Users } from "lucide-react";
 import Link from "next/link";
 
 import PageHeader from "@/components/page-header";
@@ -33,18 +33,28 @@ const AdminLayout = async ({ children }) => {
         </Button>
       </div>
 
-      <PageHeader
-        icon={<ShieldCheck />}
-        title="Admin Settings"
-      />
+      <PageHeader icon={<ShieldCheck />} title="Admin Settings" />
 
-      <Tabs defaultValue="account" className="w-[400px]">
-        <TabsList>
-          <TabsTrigger value="account">Account</TabsTrigger>
-          <TabsTrigger value="password">Password</TabsTrigger>
+      <Tabs
+        defaultValue="pending"
+        className="grid grid-cols-1 md:grid-cols-4 gap-6"
+        orientation="vertical"
+      >
+        <TabsList className="md:col-span-1 flex flex-col w-full h-auto p-2 bg-muted/30 border rounded-md gap-2">
+          <TabsTrigger value="pending" className="flex-1 justify-start px-4 py-3 w-full"> 
+            <AlertCircle className="h-4 w-4 mr-2 inline-block" />
+            <span>Pending Verification</span>
+          </TabsTrigger>
+
+          <TabsTrigger value="doctors" className="flex-1 justify-start px-4 py-3 w-full">
+            <Users className="h-4 w-4 mr-2 inline-block" />
+            <span>Doctors</span>
+          </TabsTrigger>
         </TabsList>
 
-        {children}
+        <div className="md:col-span-3">
+          {children}
+        </div>
       </Tabs>
     </div>
   );
