@@ -5,6 +5,37 @@ import { auth } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
 import { deductCreditsForAppointment } from "@/actions/credits";
 import { addDays, endOfDay, format, isBefore, addMinutes } from "date-fns";
+import { Vonage } from "@vonage/server-sdk";
+import { Auth } from "@vonage/auth";
+
+// Initialize Vonage Video API client
+const credentials = new Auth({
+  applicationId: process.env.NEXT_PUBLIC_VONAGE_APPLICATION_ID,
+  privateKey: process.env.VONAGE_PRIVATE_KEY,
+});
+const options = {};
+const vonage = new Vonage(credentials, options);
+
+export async function getDoctorById(doctorId) {
+  try {
+    const doctor = await db.user.findUnique({
+      where: {
+        id: doctorId,
+        role: "DOCTOR",
+        verificationStatus: "VERIFIED",
+      },
+    });
+
+    if (!doctor) {
+      throw new Error("Doctor not found");
+    }
+
+    return { doctor };
+  } catch (error) {
+    console.error("Failed to fetch doctor:", error);
+    throw new Error("Failed to fetch doctor details");
+  }
+}
 
 export async function getAvailableTimeSlots(doctorId) {
   try {
@@ -253,6 +284,11 @@ export async function bookAppointment(formData) {
 }
 
 async function createVideoSession() {
-  // Generate a mock video session ID for now
-  return "video-session-" + Math.random().toString(36).substring(7);
+  try {
+    const session = await vonage.video.createSession({ mediaMode: "routed" });
+    return session.sessionId;
+  } catch (error) {
+    throw new Error("Failed to create video session: " + error.message);
+  }
 }
+
