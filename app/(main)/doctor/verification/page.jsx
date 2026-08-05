@@ -1,60 +1,43 @@
 import { redirect } from "next/navigation";
 import React from "react";
-
-import { getDoctorAppointment, getDoctorAvailability } from "@/actions/doctor";
 import { getCurrentUser } from "@/actions/onboarding";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Clock } from "lucide-react";
 
-const DoctorDashboard = async () => {
+const DoctorVerification = async () => {
   const user = await getCurrentUser();
-
-  const [appointmentsData, availabilityData] = await Promise.all([
-    getDoctorAppointment(),
-    getDoctorAvailability(),
-  ]);
 
   if (user?.role !== "DOCTOR") {
     redirect("/onboarding");
   }
 
   // If already verified, redirect to dashboard
-  if (user?.verificationStatus !== "VERIFIED") {
-    redirect("/doctor/verification");
+  if (user?.verificationStatus === "VERIFIED") {
+    redirect("/doctor");
   }
 
   return (
-    <Tabs
-      defaultValue="appointments"
-      className="grid grid-cols-1 md:grid-cols-4 gap-6"
-      orientation="vertical"
-    >
-      <TabsList className="md:col-span-1 flex flex-col w-full h-auto p-2 bg-muted/30 border rounded-md gap-2">
-        <TabsTrigger
-          value="appointments"
-          className="flex-1 justify-start px-4 py-3 w-full"
-        >
-          <Calender className="h-4 w-4 mr-2 hidden md:inline" />
-          <span>Appointments</span>
-        </TabsTrigger>
-
-        <TabsTrigger
-          value="availability"
-          className="flex-1 justify-start px-4 py-3 w-full"
-        >
-          <Clock className="h-4 w-4 mr-2 hidden md: inline" />
-          <span>Availability</span>
-        </TabsTrigger>
-      </TabsList>
-      <TabsContent value="availability" className="border-none p-0">
-        Todo
-      </TabsContent>
-
-      <TabsContent
-        value="availability"
-        className="border-none p-0"
-      >availability</TabsContent>
-    </Tabs>
+    <div className="container mx-auto px-4 py-12 max-w-2xl">
+      <Card className="bg-card border-muted text-center py-10">
+        <CardHeader>
+          <div className="mx-auto bg-emerald-900/20 p-4 rounded-full mb-4 w-fit">
+            <Clock className="h-10 w-10 text-emerald-400" />
+          </div>
+          <CardTitle className="text-2xl font-bold text-white">
+            Verification Pending
+          </CardTitle>
+          <CardDescription className="text-base mt-2">
+            Your profile is currently under review by our administration team.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <p className="text-muted-foreground">
+            We will notify you once your verification is complete. This process typically takes 1-2 business days. Thank you for your patience!
+          </p>
+        </CardContent>
+      </Card>
+    </div>
   );
 };
 
-export default DoctorDashboard;
+export default DoctorVerification;

@@ -28,7 +28,7 @@ export default function RootLayout({ children }) {
              <Header/>
 
         <main className="min-h-screen">{children}</main>
-        <Toaster richcolors/>
+        <Toaster richColors />
 
         {/* footer*/}
 

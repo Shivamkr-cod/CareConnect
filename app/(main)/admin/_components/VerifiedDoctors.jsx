@@ -57,13 +57,18 @@ export default function VerifiedDoctors({ doctors }) {
     if (data?.success && targetDoctor && actionType) {
       const actionVerb = actionType === "SUSPEND" ? "Suspended" : "Reinstated";
       toast.success(`Doctor ${targetDoctor.name} ${actionVerb.toLowerCase()} successfully`);
-      setTargetDoctor(null);
-      setActionType(null);
       
-      // If we just suspended a doctor, reload to return to the pending page as requested
-      if (actionType === "SUSPEND") {
-        window.location.reload();
-      }
+      const wasSuspend = actionType === "SUSPEND";
+
+      setTimeout(() => {
+        setTargetDoctor(null);
+        setActionType(null);
+        
+        // If we just suspended a doctor, reload to return to the pending page as requested
+        if (wasSuspend) {
+          window.location.reload();
+        }
+      }, 0);
     }
   }, [data, targetDoctor, actionType]);
 

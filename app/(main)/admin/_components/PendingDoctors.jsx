@@ -51,9 +51,9 @@ const PendingDoctors = ({ doctors }) => {
     }
   }, [data]);
 
-  const handleCloseDialog = () => {
+  function handleCloseDialog() {
     setSelectedDoctor(null);
-  };
+  }
 
   return (
     <div>

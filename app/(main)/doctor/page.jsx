@@ -1,23 +1,37 @@
 import React from "react";
 import Link from "next/link";
 import { ArrowLeft, Stethoscope, Calendar, Clock } from "lucide-react";
+import { redirect } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
-import PageHeader from "@/components/page-header";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { Card, CardContent } from "@/components/ui/card";
+import { getDoctorAvailability } from "@/actions/doctor";
+import { getCurrentUser } from "@/actions/onboarding";
+import AvailabilitySettings from "./_components/availability-settings";
 
 const DoctorDashboard = async () => {
+  const user = await getCurrentUser();
+  const availabilityData = await getDoctorAvailability();
+
+  if (user?.role !== "DOCTOR") {
+    redirect("/onboarding");
+  }
+
+  // If not verified, redirect to verification
+  if (user?.verificationStatus !== "VERIFIED") {
+    redirect("/doctor/verification");
+  }
+
   return (
     <div className="container mx-auto px-4 py-12">
       {/* Back to Home Button */}
       <div className="flex justify-start mb-6">
-        <Button variant="outline" size="sm" asChild className="border-emerald-900/30">
-          <Link href="/">
+        <Link href="/">
+          <Button variant="outline" size="sm" className="border-emerald-900/30 bg-background text-emerald-400 hover:bg-emerald-900/20 hover:text-emerald-300">
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to Home
-          </Link>
-        </Button>
+          </Button>
+        </Link>
       </div>
 
       {/* Page Header */}
@@ -43,28 +57,22 @@ const DoctorDashboard = async () => {
             Appointments
           </TabsTrigger>
 
-          <TabsTrigger 
-            value="availability" 
-            className="flex-1 justify-start px-4 py-3 w-full data-[state=active]:bg-muted data-[state=active]:text-white text-muted-foreground"
+          <TabsTrigger
+            value="availability"
+            className="flex-1 md:flex md:items-center md:justify-start md:px-4 md:py-3 w-full"
           >
-            <Clock className="h-4 w-4 mr-3" />
-            Availability
+            <Clock className="h-4 w-4 mr-2 hidden md:inline" />
+            <span>Availability</span>
           </TabsTrigger>
         </TabsList>
 
         <div className="md:col-span-3">
-          <TabsContent value="appointments" className="m-0 border-none p-0">
-            <Card className="bg-background border-muted">
-              <CardContent className="p-6">
-                <p className="text-muted-foreground">Appointments content goes here...</p>
-              </CardContent>
-            </Card>
+          <TabsContent value="appointments" className="border-none p-0">
+            <div>Todo</div>
           </TabsContent>
 
-          <TabsContent value="availability" className="m-0 border-none p-0">
-            <div className="p-4">
-              <h2 className="text-white">availability</h2>
-            </div>
+          <TabsContent value="availability" className="border-none p-0">
+            <AvailabilitySettings slots={availabilityData.slots || []} />
           </TabsContent>
         </div>
       </Tabs>
