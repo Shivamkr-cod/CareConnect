@@ -5,13 +5,13 @@ import { redirect } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { getDoctorAvailability } from "@/actions/doctor";
+import { getDoctorAvailability, getDoctorAppointments } from "@/actions/doctor";
 import { getCurrentUser } from "@/actions/onboarding";
 import AvailabilitySettings from "./_components/availability-settings";
+import DoctorAppointmentsList from "./_components/appointment-list";
 
 const DoctorDashboard = async () => {
   const user = await getCurrentUser();
-  const availabilityData = await getDoctorAvailability();
 
   if (user?.role !== "DOCTOR") {
     redirect("/onboarding");
@@ -21,6 +21,9 @@ const DoctorDashboard = async () => {
   if (user?.verificationStatus !== "VERIFIED") {
     redirect("/doctor/verification");
   }
+
+  const availabilityData = await getDoctorAvailability();
+  const appointmentsData = await getDoctorAppointments();
 
   return (
     <div className="container mx-auto px-4 py-12">
@@ -68,7 +71,7 @@ const DoctorDashboard = async () => {
 
         <div className="md:col-span-3">
           <TabsContent value="appointments" className="border-none p-0">
-            <div>Todo</div>
+            <DoctorAppointmentsList appointments={appointmentsData || []}/>
           </TabsContent>
 
           <TabsContent value="availability" className="border-none p-0">

@@ -12,7 +12,7 @@ import {
   CardContent,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Clock, Plus, Trash2, Calendar, Info } from "lucide-react";
+import { Clock, Plus, Trash2, Calendar, Info, Loader2 } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { format } from "date-fns";
