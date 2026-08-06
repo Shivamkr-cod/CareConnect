@@ -188,7 +188,7 @@ export async function bookAppointment(formData) {
       throw new Error("Doctor, start time, and end time are required");
     }
 
-    const doctor = await db.user.findUnique({
+    const doctor = await db.user.findFirst({
       where: {
         id: doctorId,
         role: "DOCTOR",
@@ -257,7 +257,7 @@ export async function bookAppointment(formData) {
       }
 
       // Create the appointment with the video session ID
-      const appointment = await tx.appointment.create({
+      const appointment = await db.appointment.create({
         data: {
           patientId: patient.id,
           doctorId: doctor.id,
