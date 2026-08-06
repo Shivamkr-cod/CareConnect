@@ -22,19 +22,21 @@ const PageHeader = ({
         </Button>
       </Link>
 
-      <div className="flex items-end gap-2">
-        {icon && (
-          <div className="text-emerald-400">
-            {React.cloneElement(icon, {
-              className: "h-12 md:h-14 w-12 md:w-14",
-            })}
-          </div>
-        )}
+      {title && (
+        <div className="flex items-end gap-2">
+          {icon && (
+            <div className="text-emerald-400">
+              {React.cloneElement(icon, {
+                className: "h-12 md:h-14 w-12 md:w-14",
+              })}
+            </div>
+          )}
 
-        <h1 className="text-4xl md:text-5xl gradient-title">
-          {title}
-        </h1>
-      </div>
+          <h1 className="text-4xl md:text-5xl gradient-title">
+            {title}
+          </h1>
+        </div>
+      )}
     </div>
   );
 };

@@ -12,7 +12,7 @@ import {
   CardContent,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Clock, Plus, Loader2, AlertCircle } from "lucide-react";
+import { Clock, Plus, Trash2, Calendar, Info } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { format } from "date-fns";
@@ -56,6 +56,7 @@ const CustomTimePicker = ({ value, onChange }) => {
     onChange(`${h24}:${newMin}`);
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (!value) {
       updateTime(hour, minute, ampm);
@@ -319,7 +320,7 @@ const AvailabilitySettings = ({ slots }) => {
 
         <div className="mt-6 p-4 bg-muted/10 border border-emerald-900/10 rounded-md">
           <h4 className="font-medium text-white flex items-center">
-            <AlertCircle className="h-4 w-4 mr-2 text-emerald-400" />
+            <Info className="h-4 w-4 mr-2 text-emerald-400" />
             How Availability Works
           </h4>
 

@@ -1,14 +1,21 @@
 "use client";
 
-import { Card, CardContent } from "@/components/ui/card";
-import React from "react";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import React, { useState } from "react";
 import Image from "next/image";
-import { User, Medal } from "lucide-react";
+import { User, Medal, ChevronUp, ChevronDown, FileText, Clock, Calendar, Info } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+
+import { useRouter } from "next/navigation";
+import SlotPicker from "./slot-picker";
+import AppointmentForm from "./appointment-form";
 
 const DoctorProfile = ({ doctor, availableDays }) => {
   const [showBooking, setBooking] = useState(false);
   const [selectedSlot, setSelectedSlot] = useState(null);
+  const router = useRouter();
 
   const handleSlotSelect = (slot) => {
     setSelectedSlot(slot);
@@ -20,7 +27,7 @@ const DoctorProfile = ({ doctor, availableDays }) => {
   );
 
   const toggleBooking = () => {
-    setShowBooking(!showBooking);
+    setBooking(!showBooking);
     if (!showBooking) {
       setTimeout(() => {
         document.getElementById("booking-section")?.scrollIntoView({
@@ -29,6 +36,10 @@ const DoctorProfile = ({ doctor, availableDays }) => {
       }, 100);
     }
   };
+
+const handleBookingComplete=()=>{
+  router.push("/appointments");
+};
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -119,35 +130,86 @@ const DoctorProfile = ({ doctor, availableDays }) => {
               </p>
             </div>
 
-            <Separator className="bg-emerald-900/20" />
+            <Separator className="my-6 bg-emerald-900/20" />
 
-            <div>
+            <div className="space-y-4">
               <div className="flex items-center gap-2">
                 <Clock className="h-5 w-5 text-emerald-400" />
                 <h3 className="text-white font-medium">Availability</h3>
               </div>
+
+              {totalSlots > 0 ? (
+                <div className="flex items-center">
+                  <Calendar className="h-5 w-5 text-emerald-400 mr-2" />
+
+                  <p className="text-muted-foreground">
+                    {totalSlots} time slots available for booking over the next 4
+                    days
+                  </p>
+                </div>
+              ) : (
+                <div className="rounded-lg border border-emerald-900/20 bg-emerald-900/10 p-4 flex gap-3 text-muted-foreground items-start">
+                  <Info className="h-4 w-4 mt-0.5" />
+                  <p className="text-sm">
+                    No available slots for the next 4 days. Please check back later.
+                  </p>
+                </div>
+              )}
             </div>
-
-            {totalSlots > 0 ? (
-              <div className="flex items-center">
-                <Calendar className="h-5 w-5 text-emerald-400 mr-2" />
-
-                <p className="text-muted-foreground">
-                  {totalSlots} time slots available for booking over the next 4
-                  days
-                </p>
-              </div>
-            ) : (
-              <Alert>
-                <AlertCircle className="h-4 w-4" />
-                <AlertDescription>
-                  No available slots for the next 4 days. Please check back
-                  later.
-                </AlertDescription>
-              </Alert>
-            )}
           </CardContent>
         </Card>
+
+        {showBooking && (
+          <div id="booking-section">
+            <Card className="border-emerald-900/20">
+              <CardHeader>
+                <CardTitle className="text-xl font-bold text-white">
+                  Book an Appointment
+                </CardTitle>
+
+                <CardDescription>
+                  Select a time slot and provide details for your consultation
+                </CardDescription>
+              </CardHeader>
+
+              <CardContent>
+                {totalSlots > 0 ? (
+                  <>
+                  {!selectedSlot && (
+                    <SlotPicker
+                      days={availableDays}
+                      onSelectSlot={handleSlotSelect}
+                    />
+                  )}
+
+{selectedSlot && (
+  <AppointmentForm
+    doctorId={doctor.id}
+    slot={selectedSlot}
+    onBack={() => setSelectedSlot(null)}
+    onComplete={handleBookingComplete}
+  />
+)}
+                  </>
+                ) : (
+                  <div className="text-center py-6">
+                    <Calendar className="h-12 w-12 mx-auto text-muted-foreground mb-3" />
+
+                    <h3 className="text-xl font-medium text-white mb-2">
+                      No available slots
+                    </h3>
+
+                    <p className="text-muted-foreground">
+                      This doctor doesn&apos;t have any available appointment slots
+                      for the next 4 days. Please check back later or try
+                      another doctor.
+                    </p>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </div>
+        )}
       </div>
     </div>
   );

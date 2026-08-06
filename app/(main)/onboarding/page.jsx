@@ -63,8 +63,6 @@ const OnboardingPage = () => {
     },
   });
 
-  const specialtyValue = watch("specialty");
-
   const handlePatientSelection = async () => {
     if (loading) return;
 
@@ -184,7 +182,7 @@ const OnboardingPage = () => {
               <Label htmlFor="specialty">Medical Speciality</Label>
 
               <Select
-                value={specialtyValue}
+                value={watch("specialty")}
                 onValueChange={(value) => setValue("specialty", value)}
               >
                 <SelectTrigger id="specialty">
