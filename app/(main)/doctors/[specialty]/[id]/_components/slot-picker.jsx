@@ -3,7 +3,8 @@
 import React, { useState } from "react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
-import { Clock } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Clock, ChevronRight } from "lucide-react";
 import { format } from "date-fns";
 
 const SlotPicker = ({ days, onSelectSlot }) => {
@@ -26,11 +27,7 @@ const SlotPicker = ({ days, onSelectSlot }) => {
 
   return (
     <div className="space-y-6">
-      <Tabs
-        value={activeTab}
-        onValueChange={setActiveTab}
-        className="w-full"
-      >
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <TabsList className="w-full justify-start overflow-x-auto overflow-y-hidden border border-emerald-900/20 bg-emerald-900/5 p-1 rounded-md h-auto flex-wrap gap-1">
           {days.map((day) => (
             <TabsTrigger
@@ -112,8 +109,16 @@ const SlotPicker = ({ days, onSelectSlot }) => {
         ))}
       </Tabs>
 
-
-
+      <div className="flex justify-end">
+        <Button
+          onClick={confirmSelection}
+          disabled={!selectedSlot}
+          className="bg-emerald-600 hover:bg-emerald-700"
+        >
+          Continue
+          <ChevronRight className="ml-2 h-4 w-4" />
+        </Button>
+      </div>
     </div>
   );
 };
