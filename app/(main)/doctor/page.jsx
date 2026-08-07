@@ -48,13 +48,13 @@ const DoctorDashboard = async () => {
       {/* Main Content Area with Vertical Tabs */}
       <Tabs
         defaultValue="appointments"
-        className="grid grid-cols-1 md:grid-cols-4 gap-6"
+        className="grid grid-cols-1 lg:grid-cols-4 gap-6"
         orientation="vertical"
       >
-        <TabsList className="md:col-span-1 flex flex-col w-full h-auto p-2 bg-muted/20 border-none rounded-md gap-2 justify-start items-start">
+        <TabsList className="lg:col-span-1 flex flex-row lg:flex-col w-full h-auto p-2 bg-muted/20 border-none rounded-md gap-2 justify-start items-start overflow-x-auto">
           <TabsTrigger 
             value="appointments" 
-            className="flex-1 justify-start px-4 py-3 w-full data-[state=active]:bg-muted data-[state=active]:text-white text-muted-foreground"
+            className="flex-1 justify-start px-4 py-3 w-full data-[state=active]:bg-muted data-[state=active]:text-white text-muted-foreground whitespace-nowrap"
           >
             <Calendar className="h-4 w-4 mr-3" />
             Appointments
@@ -62,14 +62,14 @@ const DoctorDashboard = async () => {
 
           <TabsTrigger
             value="availability"
-            className="flex-1 md:flex md:items-center md:justify-start md:px-4 md:py-3 w-full"
+            className="flex-1 justify-start px-4 py-3 w-full data-[state=active]:bg-muted data-[state=active]:text-white text-muted-foreground whitespace-nowrap"
           >
             <Clock className="h-4 w-4 mr-2 hidden md:inline" />
             <span>Availability</span>
           </TabsTrigger>
         </TabsList>
 
-        <div className="md:col-span-3">
+        <div className="lg:col-span-3">
           <TabsContent value="appointments" className="border-none p-0">
             <DoctorAppointmentsList appointments={appointmentsData || []}/>
           </TabsContent>

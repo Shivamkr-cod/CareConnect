@@ -58,7 +58,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="relative h-[420px] lg:h-[620px]">
+            <div className="relative h-[300px] sm:h-[400px] lg:h-[620px]">
               <Image
                 src="/banner2.png"
                 alt="Doctor consultation"
