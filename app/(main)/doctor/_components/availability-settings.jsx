@@ -56,11 +56,11 @@ const CustomTimePicker = ({ value, onChange }) => {
     onChange(`${h24}:${newMin}`);
   };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (!value) {
       updateTime(hour, minute, ampm);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleHourChange = (val) => {

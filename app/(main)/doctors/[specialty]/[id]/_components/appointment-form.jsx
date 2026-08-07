@@ -25,17 +25,12 @@ const AppointmentForm = ({ doctorId, slot, onBack, onComplete }) => {
     formData.append("endTime", slot.endTime);
     formData.append("description", description);
 
-    await submitBooking(formData);
-  };
-
-  useEffect(() => {
-    if (data) {
-      if (data.success) {
-        toast.success("Appointment booked successfully!");
-        onComplete();
-      }
+    const res = await submitBooking(formData);
+    if (res?.success) {
+      toast.success("Appointment booked successfully!");
+      onComplete();
     }
-  }, [data]);
+  };
 
   return (
     <form className="space-y-6" onSubmit={handleSubmit}>

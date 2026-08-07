@@ -4,18 +4,20 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import Image from "next/image";
 
 const DoctorCard = ({ doctor }) => {
   return (
     <Card className="bg-background border-emerald-900/20 hover:border-emerald-700/40 transition-all">
       <CardContent className="pt-4">
         <div className="flex items-start gap-4">
-          <div className="w-12 h-12 rounded-full bg-emerald-900/20 flex items-center justify-center flex-shrink-0">
+          <div className="relative w-12 h-12 rounded-full bg-emerald-900/20 flex items-center justify-center flex-shrink-0 overflow-hidden">
             {doctor.imageUrl ? (
-              <img
+              <Image
                 src={doctor.imageUrl}
                 alt={doctor.name}
-                className="w-12 h-12 rounded-full object-cover"
+                fill
+                className="object-cover"
               />
             ) : (
               <User className="h-6 w-6 text-emerald-400" />

@@ -8,7 +8,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-import AppointmentCard from "@/components/appointment-card";
+import { AppointmentCard } from "@/components/appointment-card";
 
 const DoctorAppointmentsList = ({ appointments }) => {
   return (

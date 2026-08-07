@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Loader2, Stethoscope, User } from "lucide-react";
@@ -181,27 +181,33 @@ const OnboardingPage = () => {
             <div className="space-y-2">
               <Label htmlFor="specialty">Medical Speciality</Label>
 
-              <Select
-                value={watch("specialty")}
-                onValueChange={(value) => setValue("specialty", value)}
-              >
-                <SelectTrigger id="specialty">
-                  <SelectValue placeholder="Select your specialty" />
-                </SelectTrigger>
+              <Controller
+                name="specialty"
+                control={control}
+                render={({ field }) => (
+                  <Select
+                    value={field.value}
+                    onValueChange={field.onChange}
+                  >
+                    <SelectTrigger id="specialty">
+                      <SelectValue placeholder="Select your specialty" />
+                    </SelectTrigger>
 
-                <SelectContent>
-                  {SPECIALTIES.map((spec) => {
-                    return (
-                      <SelectItem key={spec.name} value={spec.name}>
-                        <div className="flex items-center gap-2">
-                          <span className="text-emerald-400">{spec.icon}</span>
-                          {spec.name}
-                        </div>
-                      </SelectItem>
-                    );
-                  })}
-                </SelectContent>
-              </Select>
+                    <SelectContent>
+                      {SPECIALTIES.map((spec) => {
+                        return (
+                          <SelectItem key={spec.name} value={spec.name}>
+                            <div className="flex items-center gap-2">
+                              <span className="text-emerald-400">{spec.icon}</span>
+                              {spec.name}
+                            </div>
+                          </SelectItem>
+                        );
+                      })}
+                    </SelectContent>
+                  </Select>
+                )}
+              />
 
               {errors.specialty && (
                 <p className="text-sm font-medium text-red-500 mt-1">

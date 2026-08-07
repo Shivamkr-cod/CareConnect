@@ -1,43 +1,45 @@
 "use client";
-
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { format } from "date-fns";
-import { toast } from "sonner";
-
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 import {
-  cancelAppointment,
-  addAppointmentNotes,
-  markAppointmentCompleted,
-} from "@/actions/doctor";
-import { generateVideoToken } from "@/actions/appointments";
-
-import useFetch from "@/hooks/use-fetch";
-
-import {
-  User,
-  Stethoscope,
   Calendar,
   Clock,
-  CheckCircle,
-  Loader2,
+  User,
   Video,
+  Stethoscope,
+  X,
+  Edit,
+  Loader2,
+  CheckCircle,
 } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
+import {
+  cancelAppointment,
+  addAppointmentNotes,
+  markAppointmentCompleted,
+} from "@/actions/doctor";
+import { generateVideoToken } from "@/actions/appointments";
+import useFetch from "@/hooks/use-fetch";
+import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
-const AppointmentCard = ({ appointment, userRole }) => {
+export function AppointmentCard({
+  appointment,
+  userRole,
+  refetchAppointments,
+}) {
   const [open, setOpen] = useState(false);
-  const [action, setAction] = useState(null); // "cancel", "notes", "video", "complete"
+  const [action, setAction] = useState(null);
   const [notes, setNotes] = useState(appointment.notes || "");
   const router = useRouter();
 
@@ -65,16 +67,9 @@ const AppointmentCard = ({ appointment, userRole }) => {
     data: completeData,
   } = useFetch(markAppointmentCompleted);
 
-  const otherParty =
-    userRole === "DOCTOR" ? appointment.patient : appointment.doctor;
-
-  const otherPartyLabel = userRole === "DOCTOR" ? "Patient" : "Doctor";
-
-  const otherPartyIcon = userRole === "DOCTOR" ? <User /> : <Stethoscope />;
-
   const formatDateTime = (dateString) => {
     try {
-      return format(new Date(dateString), "MMMM d, yyyy 'at' h:mm a");
+      return format(new Date(dateString), "MMMM d, yyyy 'at' h a");
     } catch (e) {
       return "Invalid date";
     }
@@ -82,51 +77,116 @@ const AppointmentCard = ({ appointment, userRole }) => {
 
   const formatTime = (dateString) => {
     try {
-      return format(new Date(dateString), "h:mm a");
+      return format(new Date(dateString), "h a");
     } catch (e) {
       return "Invalid time";
     }
   };
 
-  const canMarkComplete = () => {
+  const canMarkCompleted = () => {
     if (userRole !== "DOCTOR" || appointment.status !== "SCHEDULED") {
       return false;
     }
-
     const now = new Date();
     const appointmentEndTime = new Date(appointment.endTime);
-
     return now >= appointmentEndTime;
+  };
+
+  const handleCancelAppointment = async () => {
+    if (cancelLoading) return;
+    if (
+      window.confirm(
+        "Are you sure you want to cancel this appointment? This action cannot be undone."
+      )
+    ) {
+      const formData = new FormData();
+      formData.append("appointmentId", appointment.id);
+      const res = await submitCancel(formData);
+      if (res?.success) {
+        toast.success("Appointment cancelled successfully");
+        setOpen(false);
+        if (refetchAppointments) {
+          refetchAppointments();
+        } else {
+          router.refresh();
+        }
+      }
+    }
   };
 
   const handleMarkCompleted = async () => {
     if (completeLoading) return;
 
+    const now = new Date();
+    const appointmentEndTime = new Date(appointment.endTime);
+
+    if (now < appointmentEndTime) {
+      alert(
+        "Cannot mark appointment as completed before the scheduled end time."
+      );
+      return;
+    }
+
     if (
       window.confirm(
-        "Are you sure you want to mark this appointment as completed? This action cannot be undone.",
+        "Are you sure you want to mark this appointment as completed? This action cannot be undone."
       )
     ) {
       const formData = new FormData();
       formData.append("appointmentId", appointment.id);
-
-      await submitMarkCompleted(formData);
+      const res = await submitMarkCompleted(formData);
+      if (res?.success) {
+        toast.success("Appointment marked as completed");
+        setOpen(false);
+        if (refetchAppointments) {
+          refetchAppointments();
+        } else {
+          router.refresh();
+        }
+      }
     }
   };
 
-  useEffect(() => {
-    if (completeData?.success) {
-      toast.success("Appointment marked as completed");
-      setOpen(false);
+  const handleSaveNotes = async () => {
+    if (notesLoading || userRole !== "DOCTOR") return;
+    const formData = new FormData();
+    formData.append("appointmentId", appointment.id);
+    formData.append("notes", notes);
+    const res = await submitNotes(formData);
+    if (res?.success) {
+      toast.success("Notes saved successfully");
+      setAction(null);
+      if (refetchAppointments) {
+        refetchAppointments();
+      } else {
+        router.refresh();
+      }
     }
-  }, [completeData]);
+  };
+
+  const handleJoinVideoCall = async () => {
+    if (tokenLoading) return;
+    setAction("video");
+
+    const formData = new FormData();
+    formData.append("appointmentId", appointment.id);
+    const res = await submitTokenRequest(formData);
+    if (res?.success) {
+      router.push(
+        `/video-call?sessionId=${res.videoSessionId}&token=${res.token}&appointmentId=${appointment.id}`
+      );
+    } else if (res?.error) {
+      setAction(null);
+    }
+  };
+
+
 
   const isAppointmentActive = () => {
     const now = new Date();
     const appointmentTime = new Date(appointment.startTime);
     const appointmentEndTime = new Date(appointment.endTime);
 
-    // Can join 30 minutes before start until end time
     return (
       (appointmentTime.getTime() - now.getTime() <= 30 * 60 * 1000 &&
         now < appointmentTime) ||
@@ -134,24 +194,10 @@ const AppointmentCard = ({ appointment, userRole }) => {
     );
   };
 
-  const handleJoinVideoCall = async () => {
-    if (tokenLoading) return;
-
-    setAction("video");
-
-    const formData = new FormData();
-    formData.append("appointmentId", appointment.id);
-
-    await submitTokenRequest(formData);
-  };
-
-  useEffect(() => {
-    if (tokenData?.success) {
-      router.push(
-        `/video-call?sessionId=${tokenData.videoSessionId}&token=${tokenData.token}&appointmentId=${appointment.id}`,
-      );
-    }
-  }, [tokenData, appointment.id]);
+  const otherParty =
+    userRole === "DOCTOR" ? appointment.patient : appointment.doctor;
+  const otherPartyLabel = userRole === "DOCTOR" ? "Patient" : "Doctor";
+  const otherPartyIcon = userRole === "DOCTOR" ? <User /> : <Stethoscope />;
 
   return (
     <>
@@ -162,58 +208,50 @@ const AppointmentCard = ({ appointment, userRole }) => {
               <div className="bg-muted/20 rounded-full p-2 mt-1">
                 {otherPartyIcon}
               </div>
-
-              <div className="ml-4">
+              <div>
                 <h3 className="font-medium text-white">
                   {userRole === "DOCTOR"
                     ? otherParty.name
                     : `Dr. ${otherParty.name}`}
                 </h3>
-
                 {userRole === "DOCTOR" && (
                   <p className="text-sm text-muted-foreground">
                     {otherParty.email}
                   </p>
                 )}
-
-                {userRole !== "DOCTOR" && (
+                {userRole === "PATIENT" && (
                   <p className="text-sm text-muted-foreground">
                     {otherParty.specialty}
                   </p>
                 )}
-
                 <div className="flex items-center mt-2 text-sm text-muted-foreground">
                   <Calendar className="h-4 w-4 mr-1" />
                   <span>{formatDateTime(appointment.startTime)}</span>
                 </div>
-
                 <div className="flex items-center mt-1 text-sm text-muted-foreground">
                   <Clock className="h-4 w-4 mr-1" />
                   <span>
-                    {formatTime(appointment.startTime)}
-                    {" - "}
+                    {formatTime(appointment.startTime)} -{" "}
                     {formatTime(appointment.endTime)}
                   </span>
                 </div>
               </div>
             </div>
-
             <div className="flex flex-col gap-2 self-end md:self-start">
               <Badge
                 variant="outline"
                 className={
                   appointment.status === "COMPLETED"
-                    ? "bg-emerald-900/20 border-emerald-900/30 text-emerald-400 self-start"
+                    ? "bg-emerald-900/20 border-emerald-900/30 text-emerald-400"
                     : appointment.status === "CANCELLED"
-                      ? "bg-red-900/20 border-red-900/30 text-red-400 self-start"
-                      : "bg-amber-900/20 border-amber-900/30 text-amber-400 self-start"
+                    ? "bg-red-900/20 border-red-900/30 text-red-400"
+                    : "bg-amber-900/20 border-amber-900/30 text-amber-400"
                 }
               >
                 {appointment.status}
               </Badge>
-
               <div className="flex gap-2 mt-2 flex-wrap">
-                {canMarkComplete() && (
+                {canMarkCompleted() && (
                   <Button
                     size="sm"
                     onClick={handleMarkCompleted}
@@ -230,7 +268,6 @@ const AppointmentCard = ({ appointment, userRole }) => {
                     )}
                   </Button>
                 )}
-
                 <Button
                   size="sm"
                   variant="outline"
@@ -245,14 +282,12 @@ const AppointmentCard = ({ appointment, userRole }) => {
         </CardContent>
       </Card>
 
-      {/* Appointment Details Dialog */}
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="sm:max-w-md">
+        <DialogContent className="sm:max-w-lg">
           <DialogHeader>
             <DialogTitle className="text-xl font-bold text-white">
               Appointment Details
             </DialogTitle>
-
             <DialogDescription>
               {appointment.status === "SCHEDULED"
                 ? "Manage your upcoming appointment"
@@ -260,31 +295,26 @@ const AppointmentCard = ({ appointment, userRole }) => {
             </DialogDescription>
           </DialogHeader>
 
-          <div className="space-y-4">
-            {/* Other Party Information */}
+          <div className="space-y-4 py-4">
             <div className="space-y-2">
               <h4 className="text-sm font-medium text-muted-foreground">
                 {otherPartyLabel}
               </h4>
-
               <div className="flex items-center">
                 <div className="h-5 w-5 text-emerald-400 mr-2">
                   {otherPartyIcon}
                 </div>
-
                 <div>
                   <p className="text-white font-medium">
                     {userRole === "DOCTOR"
                       ? otherParty.name
                       : `Dr. ${otherParty.name}`}
                   </p>
-
                   {userRole === "DOCTOR" && (
                     <p className="text-muted-foreground text-sm">
                       {otherParty.email}
                     </p>
                   )}
-
                   {userRole === "PATIENT" && (
                     <p className="text-muted-foreground text-sm">
                       {otherParty.specialty}
@@ -294,12 +324,10 @@ const AppointmentCard = ({ appointment, userRole }) => {
               </div>
             </div>
 
-            {/* Appointment Time */}
             <div className="space-y-2">
               <h4 className="text-sm font-medium text-muted-foreground">
                 Scheduled Time
               </h4>
-
               <div className="flex flex-col gap-1">
                 <div className="flex items-center">
                   <Calendar className="h-5 w-5 text-emerald-400 mr-2" />
@@ -307,7 +335,6 @@ const AppointmentCard = ({ appointment, userRole }) => {
                     {formatDateTime(appointment.startTime)}
                   </p>
                 </div>
-
                 <div className="flex items-center">
                   <Clock className="h-5 w-5 text-emerald-400 mr-2" />
                   <p className="text-white">
@@ -322,22 +349,20 @@ const AppointmentCard = ({ appointment, userRole }) => {
               <h4 className="text-sm font-medium text-muted-foreground">
                 Status
               </h4>
-
               <Badge
                 variant="outline"
                 className={
                   appointment.status === "COMPLETED"
                     ? "bg-emerald-900/20 border-emerald-900/30 text-emerald-400"
                     : appointment.status === "CANCELLED"
-                      ? "bg-red-900/20 border-red-900/30 text-red-400"
-                      : "bg-amber-900/20 border-amber-900/30 text-amber-400"
+                    ? "bg-red-900/20 border-red-900/30 text-red-400"
+                    : "bg-amber-900/20 border-amber-900/30 text-amber-400"
                 }
               >
                 {appointment.status}
               </Badge>
             </div>
 
-            {/* Patient Description */}
             {appointment.patientDescription && (
               <div className="space-y-2">
                 <h4 className="text-sm font-medium text-muted-foreground">
@@ -345,9 +370,8 @@ const AppointmentCard = ({ appointment, userRole }) => {
                     ? "Patient Description"
                     : "Your Description"}
                 </h4>
-
-                <div className="p-3 rounded-md bg-muted/20 border border-emerald-900/20 overflow-hidden">
-                  <p className="text-white whitespace-pre-line break-words">
+                <div className="p-3 rounded-md bg-muted/20 border border-emerald-900/20">
+                  <p className="text-white whitespace-pre-line">
                     {appointment.patientDescription}
                   </p>
                 </div>
@@ -359,9 +383,8 @@ const AppointmentCard = ({ appointment, userRole }) => {
                 <h4 className="text-sm font-medium text-muted-foreground">
                   Video Consultation
                 </h4>
-
                 <Button
-                  className="w-full bg-emerald-600 hover:bg-emerald-700 whitespace-normal h-auto py-2 text-center"
+                  className="w-full bg-emerald-600 hover:bg-emerald-700"
                   disabled={
                     !isAppointmentActive() || action === "video" || tokenLoading
                   }
@@ -383,11 +406,128 @@ const AppointmentCard = ({ appointment, userRole }) => {
                 </Button>
               </div>
             )}
+
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <h4 className="text-sm font-medium text-muted-foreground">
+                  Doctor Notes
+                </h4>
+                {userRole === "DOCTOR" &&
+                  action !== "notes" &&
+                  appointment.status !== "CANCELLED" && (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => setAction("notes")}
+                      className="h-7 text-emerald-400 hover:text-emerald-300 hover:bg-emerald-900/20"
+                    >
+                      <Edit className="h-3.5 w-3.5 mr-1" />
+                      {appointment.notes ? "Edit" : "Add"}
+                    </Button>
+                  )}
+              </div>
+
+              {userRole === "DOCTOR" && action === "notes" ? (
+                <div className="space-y-3">
+                  <Textarea
+                    value={notes}
+                    onChange={(e) => setNotes(e.target.value)}
+                    placeholder="Enter your clinical notes here..."
+                    className="bg-background border-emerald-900/20 min-h-[100px]"
+                  />
+                  <div className="flex justify-end space-x-2">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => {
+                        setAction(null);
+                        setNotes(appointment.notes || "");
+                      }}
+                      disabled={notesLoading}
+                      className="border-emerald-900/30"
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      size="sm"
+                      onClick={handleSaveNotes}
+                      disabled={notesLoading}
+                      className="bg-emerald-600 hover:bg-emerald-700"
+                    >
+                      {notesLoading ? (
+                        <>
+                          <Loader2 className="mr-2 h-3.5 w-3.5 animate-spin" />
+                          Saving...
+                        </>
+                      ) : (
+                        "Save Notes"
+                      )}
+                    </Button>
+                  </div>
+                </div>
+              ) : (
+                <div className="p-3 rounded-md bg-muted/20 border border-emerald-900/20 min-h-[80px]">
+                  {appointment.notes ? (
+                    <p className="text-white whitespace-pre-line">
+                      {appointment.notes}
+                    </p>
+                  ) : (
+                    <p className="text-muted-foreground italic">
+                      No notes added yet
+                    </p>
+                  )}
+                </div>
+              )}
+            </div>
+          </div>
+
+          <div className="flex pt-4 sm:flex-row">
+            <div className="flex gap-2 w-full">
+              {canMarkCompleted() && (
+                <Button
+                  onClick={handleMarkCompleted}
+                  disabled={completeLoading}
+                  className="bg-emerald-600 hover:bg-emerald-700"
+                >
+                  {completeLoading ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Completing...
+                    </>
+                  ) : (
+                    <>
+                      <CheckCircle className="mr-2 h-4 w-4" />
+                      Mark Complete
+                    </>
+                  )}
+                </Button>
+              )}
+
+              {appointment.status === "SCHEDULED" && (
+                <Button
+                  variant="outline"
+                  onClick={handleCancelAppointment}
+                  disabled={cancelLoading}
+                  className="border-red-900/30 text-red-400 hover:bg-red-900/10 mt-3 sm:mt-0"
+                >
+                  {cancelLoading ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Cancelling...
+                    </>
+                  ) : (
+                    <>
+                      <X className="h-4 w-4 mr-1" />
+                      Cancel Appointment
+                    </>
+                  )}
+                </Button>
+              )}
+            </div>
           </div>
         </DialogContent>
       </Dialog>
     </>
   );
-};
-
-export default AppointmentCard;
+}
