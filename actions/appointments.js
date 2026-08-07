@@ -16,6 +16,16 @@ const credentials = new Auth({
 const options = {};
 const vonage = new Vonage(credentials, options);
 
+async function createVideoSession() {
+  try {
+    const session = await vonage.video.createSession({ mediaMode: 'routed' });
+    return session.sessionId;
+  } catch (error) {
+    console.error("Failed to create video session:", error);
+    throw new Error("Failed to create video session");
+  }
+}
+
 export async function getDoctorById(doctorId) {
   try {
     const doctor = await db.user.findUnique({

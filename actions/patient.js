@@ -1,4 +1,7 @@
+"use server";
+
 import { auth } from "@clerk/nextjs/server";
+import { db } from "@/lib/prisma";
 
 export async function getPatientAppointments() {
   const { userId } = await auth();

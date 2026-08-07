@@ -41,7 +41,16 @@ export function AppointmentCard({
   const [open, setOpen] = useState(false);
   const [action, setAction] = useState(null);
   const [notes, setNotes] = useState(appointment.notes || "");
+  const [currentTime, setCurrentTime] = useState(new Date());
   const router = useRouter();
+
+  useEffect(() => {
+    // Update current time every 10 seconds to auto-enable the video call button
+    const interval = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 10000);
+    return () => clearInterval(interval);
+  }, []);
 
   const {
     loading: cancelLoading,
@@ -183,7 +192,7 @@ export function AppointmentCard({
 
 
   const isAppointmentActive = () => {
-    const now = new Date();
+    const now = currentTime;
     const appointmentTime = new Date(appointment.startTime);
     const appointmentEndTime = new Date(appointment.endTime);
 
@@ -192,6 +201,30 @@ export function AppointmentCard({
         now < appointmentTime) ||
       (now >= appointmentTime && now <= appointmentEndTime)
     );
+  };
+
+  const getTimeRemainingToJoin = () => {
+    const now = currentTime;
+    const appointmentTime = new Date(appointment.startTime);
+    const joinTime = new Date(appointmentTime.getTime() - 30 * 60 * 1000);
+    
+    const diffMs = joinTime.getTime() - now.getTime();
+    if (diffMs <= 0) return "";
+    
+    const diffMinutes = Math.floor(diffMs / (1000 * 60));
+    if (diffMinutes < 60) {
+      return `in ${diffMinutes} minute${diffMinutes !== 1 ? 's' : ''}`;
+    }
+    
+    const diffHours = Math.floor(diffMinutes / 60);
+    const remainingMinutes = diffMinutes % 60;
+    if (diffHours < 24) {
+      return `in ${diffHours} hr${diffHours !== 1 ? 's' : ''}${remainingMinutes > 0 ? ` ${remainingMinutes} min` : ''}`;
+    }
+    
+    const diffDays = Math.floor(diffHours / 24);
+    const remainingHours = diffHours % 24;
+    return `in ${diffDays} day${diffDays !== 1 ? 's' : ''}${remainingHours > 0 ? ` ${remainingHours} hr` : ''}`;
   };
 
   const otherParty =
@@ -400,7 +433,7 @@ export function AppointmentCard({
                       <Video className="h-4 w-4 mr-2" />
                       {isAppointmentActive()
                         ? "Join Video Call"
-                        : "Video call will be available 30 minutes before appointment"}
+                        : `Video call available ${getTimeRemainingToJoin()}`}
                     </>
                   )}
                 </Button>
