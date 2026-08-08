@@ -81,7 +81,7 @@ const PendingDoctors = ({ doctors }) => {
                   <CardContent className="p-4">
                     <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                       <div className="flex items-center gap-4">
-                        <User className="h-5 w-5 text-emerald-400" />
+                        <User className="h-5 w-5 text-blue-400" />
                         <div>
                           <h3 className="font-medium text-white">
                             {doctor.name}
@@ -162,11 +162,11 @@ const PendingDoctors = ({ doctors }) => {
                 </div>
               </div>
 
-              <Separator className="bg-emerald-900/20" />
+              <Separator className="bg-blue-900/20" />
 
               <div className="space-y-4">
                 <div className="flex items-center gap-2">
-                  <Medal className="h-5 w-5 text-emerald-400" />
+                  <Medal className="h-5 w-5 text-blue-400" />
                   <h3 className="text-white font-medium">
                     Professional Information
                   </h3>
@@ -199,7 +199,7 @@ const PendingDoctors = ({ doctors }) => {
                       href={selectedDoctor.credentialUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-emerald-400 hover:text-emerald-300 flex items-center w-fit text-sm font-medium"
+                      className="text-blue-400 hover:text-blue-300 flex items-center w-fit text-sm font-medium"
                     >
                       View Credentials
                       <ExternalLink className="h-4 w-4 ml-1" />
@@ -210,7 +210,7 @@ const PendingDoctors = ({ doctors }) => {
 
               <div className="space-y-2 pt-2">
                 <div className="flex items-center gap-2">
-                  <FileText className="h-5 w-5 text-emerald-400" />
+                  <FileText className="h-5 w-5 text-blue-400" />
                   <h3 className="text-white font-medium">
                     Service Description
                   </h3>
@@ -241,7 +241,7 @@ const PendingDoctors = ({ doctors }) => {
                   handleUpdateStatus(selectedDoctor.id, "VERIFIED")
                 }
                 disabled={loading}
-                className="bg-emerald-600 hover:bg-emerald-700"
+                className="bg-blue-600 hover:bg-blue-700"
               >
                 <Check className="mr-2 h-4 w-4" />
                 Approve

@@ -8,7 +8,7 @@ export async function generateMetadata({ params }) {
   const { doctor } = await getDoctorById(id);
 
   return {
-    title: `Dr. ${doctor.name} - MediMeet`,
+    title: `Dr. ${doctor.name} - CareConnect`,
     description: `Book an appointment with Dr. ${doctor.name}, specialist with ${doctor.experience} years of experience.`,
   };
 }

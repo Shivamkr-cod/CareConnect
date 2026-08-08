@@ -3,7 +3,7 @@ import { Stethoscope } from "lucide-react";
 import React from "react";
 
 export const metadata = {
-  title: "Doctor Dashboard - MediMeet",
+  title: "Doctor Dashboard - CareConnect",
   description: "Manage your appointments and availability",
 };
 

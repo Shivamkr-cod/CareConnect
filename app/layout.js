@@ -9,7 +9,7 @@ import { Toaster } from "sonner";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "MediMeet- Doctor Appointment App",
+  title: "CareConnect- Doctor Appointment App",
   description: "Connect with doctors anytime, anywhere",
 };
 

@@ -91,11 +91,11 @@ const Header = async () => {
             <Link href="/pricing">
               <Badge
                 variant="outline"
-                className="h-9 bg-emerald-900/20 border-emerald-700/30 px-3 py-1 flex items-center gap-2"
+                className="h-9 bg-blue-900/20 border-blue-700/30 px-3 py-1 flex items-center gap-2"
               >
-                <CreditCard className="h-3.5 w-3.5 text-emerald-400" />
+                <CreditCard className="h-3.5 w-3.5 text-blue-400" />
 
-                <span className="text-emerald-400">
+                <span className="text-blue-400">
                   {user && user?.role === "PATIENT" ? (
                     <>
                       {user.credits}{" "}

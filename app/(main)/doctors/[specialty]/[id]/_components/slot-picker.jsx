@@ -28,16 +28,16 @@ const SlotPicker = ({ days, onSelectSlot }) => {
   return (
     <div className="space-y-6">
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="w-full justify-start overflow-x-auto overflow-y-hidden border border-emerald-900/20 bg-emerald-900/5 p-1 rounded-md h-auto flex-wrap gap-1">
+        <TabsList className="w-full justify-start overflow-x-auto overflow-y-hidden border border-blue-900/20 bg-blue-900/5 p-1 rounded-md h-auto flex-wrap gap-1">
           {days.map((day) => (
             <TabsTrigger
               key={day.date}
               value={day.date}
               disabled={day.slots.length === 0}
               className={`
-                !data-active:bg-emerald-900/20 !data-active:border-emerald-600 !data-active:text-white
+                !data-active:bg-blue-900/20 !data-active:border-blue-600 !data-active:text-white
                 border border-transparent px-4 py-2 text-muted-foreground rounded-md transition-all
-                ${day.slots.length === 0 ? "opacity-50 cursor-not-allowed" : "hover:text-emerald-400"}
+                ${day.slots.length === 0 ? "opacity-50 cursor-not-allowed" : "hover:text-blue-400"}
               `}
             >
               <div className="flex gap-1 items-center">
@@ -50,7 +50,7 @@ const SlotPicker = ({ days, onSelectSlot }) => {
               </div>
 
               {day.slots.length > 0 && (
-                <div className="ml-2 bg-emerald-900/30 text-emerald-400 text-xs px-2 py-0.5 rounded">
+                <div className="ml-2 bg-blue-900/30 text-blue-400 text-xs px-2 py-0.5 rounded">
                   {day.slots.length}
                 </div>
               )}
@@ -74,10 +74,10 @@ const SlotPicker = ({ days, onSelectSlot }) => {
                   {day.slots.map((slot) => (
                     <Card
                       key={slot.startTime}
-                      className={`border-emerald-900/20 bg-transparent cursor-pointer transition-all ${
+                      className={`border-blue-900/20 bg-transparent cursor-pointer transition-all ${
                         selectedSlot?.startTime === slot.startTime
-                          ? "bg-emerald-900/10 border-emerald-600"
-                          : "hover:border-emerald-700/40"
+                          ? "bg-blue-900/10 border-blue-600"
+                          : "hover:border-blue-700/40"
                       }`}
                       onClick={() => handleSlotSelect(slot)}
                     >
@@ -85,7 +85,7 @@ const SlotPicker = ({ days, onSelectSlot }) => {
                         <Clock
                           className={`h-4 w-4 mr-2 ${
                             selectedSlot?.startTime === slot.startTime
-                              ? "text-emerald-400"
+                              ? "text-blue-400"
                               : "text-muted-foreground"
                           }`}
                         />
@@ -113,7 +113,7 @@ const SlotPicker = ({ days, onSelectSlot }) => {
         <Button
           onClick={confirmSelection}
           disabled={!selectedSlot}
-          className="bg-emerald-600 hover:bg-emerald-700"
+          className="bg-blue-600 hover:bg-blue-700"
         >
           Continue
           <ChevronRight className="ml-2 h-4 w-4" />

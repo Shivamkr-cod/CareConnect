@@ -20,8 +20,8 @@ const DoctorVerification = async () => {
     <div className="container mx-auto px-4 py-12 max-w-2xl">
       <Card className="bg-card border-muted text-center py-10">
         <CardHeader>
-          <div className="mx-auto bg-emerald-900/20 p-4 rounded-full mb-4 w-fit">
-            <Clock className="h-10 w-10 text-emerald-400" />
+          <div className="mx-auto bg-blue-900/20 p-4 rounded-full mb-4 w-fit">
+            <Clock className="h-10 w-10 text-blue-400" />
           </div>
           <CardTitle className="text-2xl font-bold text-white">
             Verification Pending

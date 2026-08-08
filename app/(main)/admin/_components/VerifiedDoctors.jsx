@@ -114,7 +114,7 @@ export default function VerifiedDoctors({ doctors }) {
                     <CardContent className="p-4">
                       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                         <div className="flex items-center gap-4">
-                          <User className="h-5 w-5 text-emerald-400" />
+                          <User className="h-5 w-5 text-blue-400" />
                           <div>
                             <h3 className="font-medium text-white">
                               {doctor.name}
@@ -151,7 +151,7 @@ export default function VerifiedDoctors({ doctors }) {
                             </>
                           ) : (
                             <>
-                              <span className="text-sm font-medium text-emerald-400">
+                              <span className="text-sm font-medium text-blue-400">
                                 Active
                               </span>
                               <Button

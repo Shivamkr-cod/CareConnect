@@ -45,10 +45,10 @@ const handleBookingComplete=()=>{
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
       <div className="md:col-span-1">
         <div className="md:sticky md:top-24">
-          <Card className="border-emerald-900/20">
+          <Card className="border-blue-900/20">
             <CardContent className="pt-6">
               <div className="flex flex-col items-center text-center">
-                <div className="relative w-32 h-32 rounded-full overflow-hidden mb-4 bg-emerald-900/20">
+                <div className="relative w-32 h-32 rounded-full overflow-hidden mb-4 bg-blue-900/20">
                   {doctor.imageUrl ? (
                     <Image
                       src={doctor.imageUrl}
@@ -58,7 +58,7 @@ const handleBookingComplete=()=>{
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center">
-                      <User className="h-16 w-16 text-emerald-400" />
+                      <User className="h-16 w-16 text-blue-400" />
                     </div>
                   )}
                 </div>
@@ -70,7 +70,7 @@ const handleBookingComplete=()=>{
                 {doctor.specialty && (
                   <Badge
                     variant="outline"
-                    className="bg-emerald-900/20 border-emerald-900/30 text-emerald-400 mb-4"
+                    className="bg-blue-900/20 border-blue-900/30 text-blue-400 mb-4"
                   >
                     {doctor.specialty}
                   </Badge>
@@ -79,7 +79,7 @@ const handleBookingComplete=()=>{
                 {doctor.experience !== null &&
                   doctor.experience !== undefined && (
                     <div className="flex items-center justify-center mb-2">
-                      <Medal className="h-4 w-4 text-emerald-400 mr-2" />
+                      <Medal className="h-4 w-4 text-blue-400 mr-2" />
                       <span className="text-muted-foreground">
                         {doctor.experience} years experience
                       </span>
@@ -88,7 +88,7 @@ const handleBookingComplete=()=>{
 
                 <Button
                   onClick={toggleBooking}
-                  className="w-full bg-emerald-600 hover:bg-emerald-700 mt-4"
+                  className="w-full bg-blue-600 hover:bg-blue-700 mt-4"
                 >
                   {showBooking ? (
                     <>
@@ -121,7 +121,7 @@ const handleBookingComplete=()=>{
           <CardContent>
             <div className="space-y-4">
               <div className="flex items-center gap-2">
-                <FileText className="h-5 w-5 text-emerald-400" />
+                <FileText className="h-5 w-5 text-blue-400" />
                 <h3 className="text-white font-medium">Description</h3>
               </div>
 
@@ -130,17 +130,17 @@ const handleBookingComplete=()=>{
               </p>
             </div>
 
-            <Separator className="my-6 bg-emerald-900/20" />
+            <Separator className="my-6 bg-blue-900/20" />
 
             <div className="space-y-4">
               <div className="flex items-center gap-2">
-                <Clock className="h-5 w-5 text-emerald-400" />
+                <Clock className="h-5 w-5 text-blue-400" />
                 <h3 className="text-white font-medium">Availability</h3>
               </div>
 
               {totalSlots > 0 ? (
                 <div className="flex items-center">
-                  <Calendar className="h-5 w-5 text-emerald-400 mr-2" />
+                  <Calendar className="h-5 w-5 text-blue-400 mr-2" />
 
                   <p className="text-muted-foreground">
                     {totalSlots} time slots available for booking over the next 4
@@ -148,7 +148,7 @@ const handleBookingComplete=()=>{
                   </p>
                 </div>
               ) : (
-                <div className="rounded-lg border border-emerald-900/20 bg-emerald-900/10 p-4 flex gap-3 text-muted-foreground items-start">
+                <div className="rounded-lg border border-blue-900/20 bg-blue-900/10 p-4 flex gap-3 text-muted-foreground items-start">
                   <Info className="h-4 w-4 mt-0.5" />
                   <p className="text-sm">
                     No available slots for the next 4 days. Please check back later.
@@ -161,7 +161,7 @@ const handleBookingComplete=()=>{
 
         {showBooking && (
           <div id="booking-section">
-            <Card className="border-emerald-900/20">
+            <Card className="border-blue-900/20">
               <CardHeader>
                 <CardTitle className="text-xl font-bold text-white">
                   Book an Appointment

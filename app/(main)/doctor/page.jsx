@@ -34,7 +34,7 @@ const DoctorDashboard = async () => {
       {/* Back to Home Button */}
       <div className="flex justify-start mb-6">
         <Link href="/">
-          <Button variant="outline" size="sm" className="border-emerald-900/30 bg-background text-emerald-400 hover:bg-emerald-900/20 hover:text-emerald-300">
+          <Button variant="outline" size="sm" className="border-blue-900/30 bg-background text-blue-400 hover:bg-blue-900/20 hover:text-blue-300">
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to Home
           </Button>
@@ -43,7 +43,7 @@ const DoctorDashboard = async () => {
 
       {/* Page Header */}
       <div className="flex items-center gap-3 mb-10">
-        <Stethoscope className="h-12 w-12 text-emerald-400" />
+        <Stethoscope className="h-12 w-12 text-blue-400" />
         <h1 className="text-4xl md:text-5xl font-bold gradient-title">
           Doctor Dashboard
         </h1>

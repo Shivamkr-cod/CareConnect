@@ -130,9 +130,9 @@
 }
 
 .gradient {
-  @apply bg-gradient-to-b from-emerald-500 to-teal-400;
+  @apply bg-gradient-to-b from-blue-500 to-cyan-400;
 }
 
 .gradient-title {
-  @apply bg-gradient-to-b from-emerald-500 to-teal-400 font-bold text-transparent bg-clip-text pb-1 pr-2;
+  @apply bg-gradient-to-b from-blue-500 to-cyan-400 font-bold text-transparent bg-clip-text pb-1 pr-2;
 }
