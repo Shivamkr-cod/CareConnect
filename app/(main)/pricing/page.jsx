@@ -21,7 +21,7 @@ const PricingPage = () => {
       <div className="max-w-full mx-auto mb-12 text-center">
         <Badge
           variant="outline"
-          className="bg-blue-900/30 border-blue-700/30 px-4 py-1 text-blue-400 text-sm font-medium mb-4"
+          className="bg-teal-900/30 border-teal-700/30 px-4 py-1 text-teal-400 text-sm font-medium mb-4"
         >
           Affordable Healthcare
         </Badge>

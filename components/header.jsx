@@ -26,17 +26,30 @@ const Header = async () => {
   return (
     <header className="fixed top-0 w-full border-b bg-background/80 backdrop-blur-md z-10 supports-[backdrop-filter]:bg-background/60">
       <nav className="container mx-auto px-4 h-16 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2 group">
-          <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-cyan-400 shadow-lg shadow-blue-500/30 overflow-hidden transition-transform group-hover:scale-105">
-            <div className="absolute inset-0 bg-white/20 rounded-xl blur-sm" />
-            <span className="relative z-10 text-2xl font-black text-white tracking-tighter drop-shadow-md">
-              C
-            </span>
-            <div className="absolute top-1.5 right-1.5 w-1.5 h-1.5 rounded-full bg-cyan-100 animate-pulse" />
-          </div>
-          <span className="text-xl md:text-2xl font-bold tracking-tight text-foreground">
-            Care<span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-cyan-400">Connect</span>
-          </span>
+        <Link href="/" className="flex items-center gap-3 group">
+          {/* Professional Tech-Health "C" SVG Logo */}
+          <svg 
+            width="38" 
+            height="38" 
+            viewBox="0 0 40 40" 
+            fill="none" 
+            xmlns="http://www.w3.org/2000/svg" 
+            className="transition-transform group-hover:scale-105 duration-300 drop-shadow-sm"
+          >
+            <path 
+              d="M28 12C26.5 9 23.5 7 20 7C12.8 7 7 12.8 7 20C7 27.2 12.8 33 20 33C23.5 33 26.5 31 28 28" 
+              stroke="url(#paint0_linear)" 
+              strokeWidth="5.5" 
+              strokeLinecap="round"
+            />
+            <circle cx="28" cy="20" r="4.5" fill="#22d3ee" className="animate-pulse" />
+            <defs>
+              <linearGradient id="paint0_linear" x1="7" y1="7" x2="28" y2="33" gradientUnits="userSpaceOnUse">
+                <stop stopColor="#0d9488"/>
+                <stop offset="1" stopColor="#0891b2"/>
+              </linearGradient>
+            </defs>
+          </svg>
         </Link>
         <div className="flex items-center space-x-2">
           <SignedIn>
@@ -94,11 +107,11 @@ const Header = async () => {
             <Link href="/pricing">
               <Badge
                 variant="outline"
-                className="h-9 bg-blue-900/20 border-blue-700/30 px-3 py-1 flex items-center gap-2"
+                className="h-9 bg-teal-900/20 border-teal-700/30 px-3 py-1 flex items-center gap-2"
               >
-                <CreditCard className="h-3.5 w-3.5 text-blue-400" />
+                <CreditCard className="h-3.5 w-3.5 text-teal-400" />
 
-                <span className="text-blue-400">
+                <span className="text-teal-400">
                   {user && user?.role === "PATIENT" ? (
                     <>
                       {user.credits}{" "}

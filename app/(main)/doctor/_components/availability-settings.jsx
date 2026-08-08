@@ -79,7 +79,7 @@ const CustomTimePicker = ({ value, onChange }) => {
   return (
     <div className="flex items-center gap-2">
       <Select value={hour} onValueChange={handleHourChange}>
-        <SelectTrigger className="w-[70px] bg-background border-blue-900/20">
+        <SelectTrigger className="w-[70px] bg-background border-teal-900/20">
           <SelectValue placeholder="HH" />
         </SelectTrigger>
         <SelectContent>
@@ -91,7 +91,7 @@ const CustomTimePicker = ({ value, onChange }) => {
       </Select>
       <span className="text-muted-foreground font-bold">:</span>
       <Select value={minute} onValueChange={handleMinChange}>
-        <SelectTrigger className="w-[70px] bg-background border-blue-900/20">
+        <SelectTrigger className="w-[70px] bg-background border-teal-900/20">
           <SelectValue placeholder="MM" />
         </SelectTrigger>
         <SelectContent>
@@ -102,7 +102,7 @@ const CustomTimePicker = ({ value, onChange }) => {
         </SelectContent>
       </Select>
       <Select value={ampm} onValueChange={handleAmPmChange}>
-        <SelectTrigger className="w-[75px] bg-background border-blue-900/20">
+        <SelectTrigger className="w-[75px] bg-background border-teal-900/20">
           <SelectValue />
         </SelectTrigger>
         <SelectContent>
@@ -180,10 +180,10 @@ const AvailabilitySettings = ({ slots }) => {
   };
 
   return (
-    <Card className="border-blue-900/20">
+    <Card className="border-teal-900/20">
       <CardHeader>
         <CardTitle className="text-xl font-bold text-white flex items-center">
-          <Clock className="h-5 w-5 mr-2 text-blue-400" />
+          <Clock className="h-5 w-5 mr-2 text-teal-400" />
           Availability Settings
         </CardTitle>
 
@@ -211,10 +211,10 @@ const AvailabilitySettings = ({ slots }) => {
                     return (
                       <div
                         key={slot.id}
-                        className="flex items-center p-3 rounded-md bg-muted/20 border border-blue-900/20 mb-2"
+                        className="flex items-center p-3 rounded-md bg-muted/20 border border-teal-900/20 mb-2"
                       >
-                        <div className="bg-blue-900/20 p-2 rounded-full mr-3">
-                          <Clock className="h-4 w-4 text-blue-400" />
+                        <div className="bg-teal-900/20 p-2 rounded-full mr-3">
+                          <Clock className="h-4 w-4 text-teal-400" />
                         </div>
 
                         <p className="text-white font-medium">
@@ -229,7 +229,7 @@ const AvailabilitySettings = ({ slots }) => {
             </div>
             <Button
               onClick={() => setShowForm(true)}
-              className="w-full bg-blue-600 hover:bg-blue-700"
+              className="w-full bg-teal-600 hover:bg-teal-700"
             >
               <Plus className="h-4 w-4 mr-2" />
               Set Availability Time
@@ -237,7 +237,7 @@ const AvailabilitySettings = ({ slots }) => {
           </>
         ) : (
           <form
-            className="space-y-4 border border-blue-900/20 rounded-md p-4"
+            className="space-y-4 border border-teal-900/20 rounded-md p-4"
             onSubmit={handleSubmit(onSubmit)}
           >
             <h3 className="text-lg font-medium text-white mb-2">
@@ -295,7 +295,7 @@ const AvailabilitySettings = ({ slots }) => {
                 variant="outline"
                 onClick={() => setShowForm(false)}
                 disabled={loading}
-                className="border-blue-900/30"
+                className="border-teal-900/30"
               >
                 Cancel
               </Button>
@@ -303,7 +303,7 @@ const AvailabilitySettings = ({ slots }) => {
               <Button
                 type="submit"
                 disabled={loading}
-                className="bg-blue-600 hover:bg-blue-700"
+                className="bg-teal-600 hover:bg-teal-700"
               >
                 {loading ? (
                   <>
@@ -318,9 +318,9 @@ const AvailabilitySettings = ({ slots }) => {
           </form>
         )}
 
-        <div className="mt-6 p-4 bg-muted/10 border border-blue-900/10 rounded-md">
+        <div className="mt-6 p-4 bg-muted/10 border border-teal-900/10 rounded-md">
           <h4 className="font-medium text-white flex items-center">
-            <Info className="h-4 w-4 mr-2 text-blue-400" />
+            <Info className="h-4 w-4 mr-2 text-teal-400" />
             How Availability Works
           </h4>
 

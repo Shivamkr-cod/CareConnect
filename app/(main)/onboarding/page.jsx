@@ -99,11 +99,11 @@ const OnboardingPage = () => {
         {/* Patient Card */}
         <Card
           onClick={() => !loading && handlePatientSelection()}
-          className="border-blue-900/20 hover:border-blue-700/40 transition-all"
+          className="border-teal-900/20 hover:border-teal-700/40 transition-all"
         >
           <CardContent className="pt-6 pb-6 flex flex-col items-center text-center">
-            <div className="p-4 bg-blue-900/20 rounded-full mb-4">
-              <User className="h-8 w-8 text-blue-400" />
+            <div className="p-4 bg-teal-900/20 rounded-full mb-4">
+              <User className="h-8 w-8 text-teal-400" />
             </div>
 
             <CardTitle className="text-xl font-semibold text-white mb-2">
@@ -118,7 +118,7 @@ const OnboardingPage = () => {
             <Button
               onClick={handlePatientSelection}
               disabled={loading}
-              className="w-full mt-2 bg-blue-600 hover:bg-blue-700"
+              className="w-full mt-2 bg-teal-600 hover:bg-teal-700"
             >
               {loading ? (
                 <>
@@ -135,11 +135,11 @@ const OnboardingPage = () => {
         {/* Doctor Card */}
         <Card
           onClick={() => !loading && setStep("doctor-form")}
-          className="border-blue-900/20 hover:border-blue-700/40 transition-all"
+          className="border-teal-900/20 hover:border-teal-700/40 transition-all"
         >
           <CardContent className="pt-6 pb-6 flex flex-col items-center text-center">
-            <div className="p-4 bg-blue-900/20 rounded-full mb-4">
-              <Stethoscope className="h-8 w-8 text-blue-400" />
+            <div className="p-4 bg-teal-900/20 rounded-full mb-4">
+              <Stethoscope className="h-8 w-8 text-teal-400" />
             </div>
 
             <CardTitle className="text-xl font-semibold text-white mb-2">
@@ -154,7 +154,7 @@ const OnboardingPage = () => {
             <Button
               disabled={loading}
               onClick={() => setStep("doctor-form")}
-              className="w-full mt-2 bg-blue-600 hover:bg-blue-700"
+              className="w-full mt-2 bg-teal-600 hover:bg-teal-700"
             >
               Continue as a Doctor
             </Button>
@@ -166,7 +166,7 @@ const OnboardingPage = () => {
 
   if (step === "doctor-form") {
     return (
-      <Card className="border-blue-900/20">
+      <Card className="border-teal-900/20">
         <CardContent className="pt-6">
           <div className="mb-6">
             <CardTitle className="text-2xl font-bold text-white mb-2">
@@ -199,7 +199,7 @@ const OnboardingPage = () => {
                         return (
                           <SelectItem key={spec.name} value={spec.name}>
                             <div className="flex items-center gap-2">
-                              <span className="text-blue-400">{spec.icon}</span>
+                              <span className="text-teal-400">{spec.icon}</span>
                               {spec.name}
                             </div>
                           </SelectItem>
@@ -276,7 +276,7 @@ const OnboardingPage = () => {
               <Button
                 type="submit"
                 disabled={loading}
-                className="bg-blue-600 hover:bg-blue-700 text-white"
+                className="bg-teal-600 hover:bg-teal-700 text-white"
               >
                 {loading ? (
                   <>

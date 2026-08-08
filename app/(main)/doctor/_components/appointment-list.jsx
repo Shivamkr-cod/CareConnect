@@ -12,10 +12,10 @@ import { AppointmentCard } from "@/components/appointment-card";
 
 const DoctorAppointmentsList = ({ appointments }) => {
   return (
-    <Card className="border-blue-900/20">
+    <Card className="border-teal-900/20">
       <CardHeader>
         <CardTitle className="text-xl font-bold text-white flex items-center">
-          <Calendar className="h-5 w-5 mr-2 text-blue-400" />
+          <Calendar className="h-5 w-5 mr-2 text-teal-400" />
           Upcoming Appointments
         </CardTitle>
       </CardHeader>

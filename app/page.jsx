@@ -16,7 +16,7 @@ export default function Home() {
             <div className="max-w-3xl space-y-6">
               <Badge
                 variant="outline"
-                className="bg-blue-900/30 border-blue-700/30 px-4 py-2 text-blue-400 text-sm font-medium"
+                className="bg-teal-900/30 border-teal-700/30 px-4 py-2 text-teal-400 text-sm font-medium"
               >
                 Healthcare made simple
               </Badge>
@@ -39,7 +39,7 @@ export default function Home() {
                 <Link href="/onboarding">
                   <Button
                     size="lg"
-                    className="bg-blue-600 text-white hover:bg-blue-700"
+                    className="bg-teal-600 text-white hover:bg-teal-700"
                   >
                     Get Started
                     <ArrowRight className="ml-2 h-4 w-4" />
@@ -50,7 +50,7 @@ export default function Home() {
                   <Button
                     size="lg"
                     variant="outline"
-                    className="border-blue-700/30 hover:bg-muted/80"
+                    className="border-teal-700/30 hover:bg-muted/80"
                   >
                     Find Doctors
                   </Button>
@@ -60,8 +60,8 @@ export default function Home() {
 
             <div className="relative h-[300px] sm:h-[400px] lg:h-[620px]">
               <Image
-                src="/banner.png"
-                alt="Doctor consultation"
+                src="/careconnect-surgeons.jpg"
+                alt="Medical Professional Preparing"
                 fill
                 priority
                 className="object-contain"
@@ -85,10 +85,10 @@ export default function Home() {
               return (
                 <Card
                   key={index}
-                  className="border-blue-900/20 hover:border-blue-800/40 transition-all duration-300"
+                  className="border-teal-900/20 hover:border-teal-800/40 transition-all duration-300"
                 >
                   <CardHeader className="pb-2">
-                    <div className="bg-blue-900/20 p-3 rounded-lg w-fit mb-4">
+                    <div className="bg-teal-900/20 p-3 rounded-lg w-fit mb-4">
                       {features.icon}
                     </div>
                     <CardTitle className="text-xl font-semibold text-white">
@@ -109,7 +109,7 @@ export default function Home() {
       <section className="py-20">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <Badge className="bg-blue-900/30 border-blue-700/30 px-4 py-1 text-blue-400 text-sm font-medium mb-4">
+            <Badge className="bg-teal-900/30 border-teal-700/30 px-4 py-1 text-teal-400 text-sm font-medium mb-4">
               Affordable Healthcare
             </Badge>
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
@@ -124,10 +124,10 @@ export default function Home() {
           <div>
             {/* Pricing Table */}
             <Pricing/>
-            <Card className="mt-12 bg-muted/20 border-blue-900/30">
+            <Card className="mt-12 bg-muted/20 border-teal-900/30">
               <CardHeader>
                 <CardTitle className="text-xl font-semibold text-white flex items-center">
-                  <Stethoscope className="h-5 w-5 mr-2 text-blue-400" />
+                  <Stethoscope className="h-5 w-5 mr-2 text-teal-400" />
                   How Our Credit System Works
                 </CardTitle>
               </CardHeader>
@@ -138,7 +138,7 @@ export default function Home() {
                     return (
                       <li key={index} className="flex items-start">
                         <div>
-                          <Check className="h-4 w-4 text-blue-400" />
+                          <Check className="h-4 w-4 text-teal-400" />
                         </div>
                         <p
                           className="text-muted-foreground"
@@ -158,7 +158,7 @@ export default function Home() {
           <div className="text-center mb-16">
             <Badge
               variant="outline"
-              className="bg-blue-900/30 border-blue-700/30 px-4 py-1 text-blue-400 text-sm font-medium mb-4"
+              className="bg-teal-900/30 border-teal-700/30 px-4 py-1 text-teal-400 text-sm font-medium mb-4"
             >
               Success Stories
             </Badge>
@@ -174,12 +174,12 @@ export default function Home() {
               return (
                 <Card
                   key={index}
-                  className="border-blue-900/20 hover:border-blue-800/40 transition-all duration-300"
+                  className="border-teal-900/20 hover:border-teal-800/40 transition-all duration-300"
                 >
                   <CardContent className="pt-6">
                     <div className="flex items-center mb-4">
-                      <div className="w-12 h-12 rounded-full bg-blue-900/20 flex items-center justify-center mr-4">
-                        <span className="text-blue-400 font-bold">
+                      <div className="w-12 h-12 rounded-full bg-teal-900/20 flex items-center justify-center mr-4">
+                        <span className="text-teal-400 font-bold">
                           {testimonial.initials}
                         </span>
                       </div>
@@ -207,7 +207,7 @@ export default function Home() {
       </section>
       <section className="py-20">
         <div className="container mx-auto px-4">
-          <Card className="bg-gradient-to-r from-blue-900/30 to-blue-950/20 border-blue-800">
+          <Card className="bg-gradient-to-r from-teal-900/30 to-teal-950/20 border-teal-800">
             <CardContent className="p-8 md:p-12 lg:p-16 relative overflow-hidden">
               <div>
                 <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
@@ -224,7 +224,7 @@ export default function Home() {
                   <Link href="/sign-up">
                     <Button
                       size="lg"
-                      className="bg-blue-600 text-white hover:bg-blue-700"
+                      className="bg-teal-600 text-white hover:bg-teal-700"
                     >
                       Sign Up Now
                     </Button>
@@ -233,7 +233,7 @@ export default function Home() {
                     <Button
                       variant="outline"
                       size="lg"
-                      className="border-blue-700/30 hover:bg-muted/80"
+                      className="border-teal-700/30 hover:bg-muted/80"
                     >
                       View Pricing
                     </Button>

@@ -4,7 +4,7 @@ import { PricingTable } from "@clerk/nextjs";
 
 const Pricing = () => {
   return (
-    <Card className="border-blue-900/30 shadow-lg bg-gradient-to-b from-blue-950/30 to-transparent">
+    <Card className="border-teal-900/30 shadow-lg bg-gradient-to-b from-teal-950/30 to-transparent">
       <CardContent className="p-6 md:p-8">
         <PricingTable
           checkoutProps={{

@@ -26,7 +26,7 @@ const PatientAppointmentsPage = async () => {
         backLabel="Find Doctors"
       />
 
-      <Card className="border-blue-900/20">
+      <Card className="border-teal-900/20">
         <CardContent className="pt-4">
           {error ? (
             <div className="text-center py-8">
