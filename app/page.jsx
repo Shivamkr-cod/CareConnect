@@ -18,21 +18,21 @@ export default function Home() {
                 variant="outline"
                 className="bg-teal-900/30 border-teal-700/30 px-4 py-2 text-teal-400 text-sm font-medium"
               >
-                Healthcare made simple
+                Your health, connected
               </Badge>
 
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight tracking-tight text-white">
-                Connect with
+                Expert doctors,
                 <br />
-                doctors{" "}
-                <span className="gradient-title whitespace-nowrap">
-                  anytime, anywhere
+                just a{" "}
+                <span className="text-white whitespace-nowrap">
+                  tap away
                 </span>
               </h1>
 
               <p className="text-muted-foreground text-lg md:text-xl max-w-xl">
-                Book appointments, consult via video, and manage your healthcare
-                journey all in one secure platform.
+                Skip the waiting room. Access immediate, secure video consultations 
+                with trusted medical professionals whenever you need them.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4">
@@ -58,13 +58,13 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="relative h-[300px] sm:h-[400px] lg:h-[620px]">
+            <div className="relative h-[300px] sm:h-[400px] lg:h-[450px] w-full">
               <Image
-                src="/careconnect-surgeons.jpg"
+                src="/careconnect-surgeons-2.jpg"
                 alt="Medical Professional Preparing"
                 fill
                 priority
-                className="object-contain"
+                className="object-cover rounded-2xl shadow-2xl"
               />
             </div>
           </div>
