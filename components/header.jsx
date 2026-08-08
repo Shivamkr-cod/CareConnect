@@ -26,14 +26,17 @@ const Header = async () => {
   return (
     <header className="fixed top-0 w-full border-b bg-background/80 backdrop-blur-md z-10 supports-[backdrop-filter]:bg-background/60">
       <nav className="container mx-auto px-4 h-16 flex items-center justify-between">
-        <Link href="/">
-          <Image
-            src="/logo-single.png"
-            alt="Medimeet Logo"
-            width={200}
-            height={60}
-            className="h-10 w-auto object-contain"
-          />
+        <Link href="/" className="flex items-center gap-2 group">
+          <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-cyan-400 shadow-lg shadow-blue-500/30 overflow-hidden transition-transform group-hover:scale-105">
+            <div className="absolute inset-0 bg-white/20 rounded-xl blur-sm" />
+            <span className="relative z-10 text-2xl font-black text-white tracking-tighter drop-shadow-md">
+              C
+            </span>
+            <div className="absolute top-1.5 right-1.5 w-1.5 h-1.5 rounded-full bg-cyan-100 animate-pulse" />
+          </div>
+          <span className="text-xl md:text-2xl font-bold tracking-tight text-foreground">
+            Care<span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-cyan-400">Connect</span>
+          </span>
         </Link>
         <div className="flex items-center space-x-2">
           <SignedIn>
