@@ -48,31 +48,25 @@ const VideoCall = ({ sessionId, token }) => {
         );
       });
 
-      sessionRef.current.on("sessionConnected", () => {
-        setIsConnected(true);
-        setIsLoading(false);
-
-        publisherRef.current = window.OT.initPublisher(
-          "publisher",
-          {
-            insertMode: "replace",
-            width: "100%",
-            height: "100%",
-            publishAudio: isAudioEnabled,
-            publishVideo: isVideoEnabled,
-          },
-          (error) => {
-            if (error) {
-              console.error("Publisher error:", error);
-              toast.error("Error initializing your camera and microphone");
-            } else {
-              console.log(
-                "Publisher initialized successfully - you should see your video now",
-              );
-            }
-          },
-        );
-      });
+      // Initialize publisher before connecting to avoid race conditions
+      publisherRef.current = window.OT.initPublisher(
+        "publisher",
+        {
+          insertMode: "replace",
+          width: "100%",
+          height: "100%",
+          publishAudio: isAudioEnabled,
+          publishVideo: isVideoEnabled,
+        },
+        (error) => {
+          if (error) {
+            console.error("Publisher error:", error);
+            toast.error("Error initializing your camera and microphone");
+          } else {
+            console.log("Publisher initialized successfully");
+          }
+        },
+      );
 
       sessionRef.current.on("sessionDisconnected", () => {
         setIsConnected(false);
@@ -82,11 +76,17 @@ const VideoCall = ({ sessionId, token }) => {
         if (error) {
           toast.error("Error connecting to video session");
         } else {
+          setIsConnected(true);
+          setIsLoading(false);
+          
           if (publisherRef.current) {
             sessionRef.current.publish(publisherRef.current, (error) => {
               if (error) {
-                console.log("Error publishing stream:", error);
-                toast.error("Error publishing your stream");
+                console.error("Error publishing stream:", error);
+                // Only show publish error if it's not a camera error to avoid duplicate toasts
+                if (error.name !== "OT_USER_MEDIA_ACCESS_DENIED") {
+                  toast.error("Error publishing your stream");
+                }
               } else {
                 console.log("Stream published successfully");
               }
@@ -109,7 +109,10 @@ const VideoCall = ({ sessionId, token }) => {
       return;
     }
 
-    initializeSession();
+    // Give React time to render the 'publisher' and 'subscriber' divs to the DOM
+    setTimeout(() => {
+      initializeSession();
+    }, 100);
   };
 
   const toggleVideo = () => {

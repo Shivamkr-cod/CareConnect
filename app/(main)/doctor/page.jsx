@@ -1,14 +1,16 @@
 import React from "react";
 import Link from "next/link";
-import { ArrowLeft, Stethoscope, Calendar, Clock } from "lucide-react";
+import { ArrowLeft, Stethoscope, Calendar, Clock, DollarSign } from "lucide-react";
 import { redirect } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { getDoctorAvailability, getDoctorAppointments } from "@/actions/doctor";
 import { getCurrentUser } from "@/actions/onboarding";
+import { getDoctorEarnings, getDoctorPayouts } from "@/actions/payout";
 import AvailabilitySettings from "./_components/availability-settings";
 import DoctorAppointmentsList from "./_components/appointment-list";
+import { DoctorEarnings } from "./_components/doctor-earning";
 
 const DoctorDashboard = async () => {
   const user = await getCurrentUser();
@@ -24,6 +26,8 @@ const DoctorDashboard = async () => {
 
   const availabilityData = await getDoctorAvailability();
   const appointmentsData = await getDoctorAppointments();
+  const { earnings } = await getDoctorEarnings();
+  const { payouts } = await getDoctorPayouts();
 
   return (
     <div className="container mx-auto px-4 py-12">
@@ -67,6 +71,14 @@ const DoctorDashboard = async () => {
             <Clock className="h-4 w-4 mr-2 hidden md:inline" />
             <span>Availability</span>
           </TabsTrigger>
+
+          <TabsTrigger
+            value="earnings"
+            className="flex-1 justify-start px-4 py-3 w-full data-[state=active]:bg-muted data-[state=active]:text-white text-muted-foreground whitespace-nowrap"
+          >
+            <DollarSign className="h-4 w-4 mr-2 hidden md:inline" />
+            <span>Earnings</span>
+          </TabsTrigger>
         </TabsList>
 
         <div className="lg:col-span-3">
@@ -76,6 +88,10 @@ const DoctorDashboard = async () => {
 
           <TabsContent value="availability" className="border-none p-0">
             <AvailabilitySettings slots={availabilityData.slots || []} />
+          </TabsContent>
+
+          <TabsContent value="earnings" className="border-none p-0">
+            <DoctorEarnings earnings={earnings} payouts={payouts} />
           </TabsContent>
         </div>
       </Tabs>

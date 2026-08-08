@@ -221,21 +221,23 @@ export default function Home() {
                 </p>
 
                 <div className="flex flex-col sm:flex-row gap-4">
-                  <Button
-                    size="lg"
-                    className="bg-emerald-600 text-white hover:bg-emerald-700"
-                    asChild
-                  >
-                    <Link href="/sign-up">Sign Up Now</Link>
-                  </Button>
-                  <Button
-                    asChild
-                    variant="outline"
-                    size="lg"
-                    className="border-emerald-700/30 hover:bg-muted/80"
-                  >
-                    <Link href="/pricing">View Pricing</Link>
-                  </Button>
+                  <Link href="/sign-up">
+                    <Button
+                      size="lg"
+                      className="bg-emerald-600 text-white hover:bg-emerald-700"
+                    >
+                      Sign Up Now
+                    </Button>
+                  </Link>
+                  <Link href="/pricing">
+                    <Button
+                      variant="outline"
+                      size="lg"
+                      className="border-emerald-700/30 hover:bg-muted/80"
+                    >
+                      View Pricing
+                    </Button>
+                  </Link>
                 </div>
               </div>
             </CardContent>

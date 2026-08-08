@@ -49,6 +49,7 @@ const OnboardingPage = () => {
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
     setValue,
     watch,
