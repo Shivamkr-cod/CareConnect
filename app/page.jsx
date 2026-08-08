@@ -85,7 +85,7 @@ export default function Home() {
               return (
                 <Card
                   key={index}
-                  className="border-teal-900/20 hover:border-teal-800/40 transition-all duration-300"
+                  className="border-teal-900/20 bg-muted/20 hover:bg-muted/40 hover:border-teal-500/50 hover:shadow-lg hover:shadow-teal-900/20 hover:-translate-y-1 transition-all duration-300"
                 >
                   <CardHeader className="pb-2">
                     <div className="bg-teal-900/20 p-3 rounded-lg w-fit mb-4">
@@ -174,7 +174,7 @@ export default function Home() {
               return (
                 <Card
                   key={index}
-                  className="border-teal-900/20 hover:border-teal-800/40 transition-all duration-300"
+                  className="border-teal-900/20 bg-muted/20 hover:bg-muted/40 hover:border-teal-500/50 hover:shadow-lg hover:shadow-teal-900/20 hover:-translate-y-1 transition-all duration-300"
                 >
                   <CardContent className="pt-6">
                     <div className="flex items-center mb-4">
@@ -207,7 +207,7 @@ export default function Home() {
       </section>
       <section className="py-20">
         <div className="container mx-auto px-4">
-          <Card className="bg-gradient-to-r from-teal-900/30 to-teal-950/20 border-teal-800">
+          <Card className="bg-gradient-to-br from-teal-900/80 via-teal-950 to-background border-teal-800/50 shadow-2xl shadow-teal-900/20">
             <CardContent className="p-8 md:p-12 lg:p-16 relative overflow-hidden">
               <div>
                 <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
