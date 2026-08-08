@@ -65,9 +65,13 @@ export function DoctorEarnings({ earnings, payouts = [] }) {
 
   useEffect(() => {
     if (data?.success) {
-      setShowPayoutDialog(false);
-      setPaypalEmail("");
-      toast.success("Payout request submitted successfully!");
+      // Use setTimeout to avoid synchronous setState warning during effect
+      const timer = setTimeout(() => {
+        setShowPayoutDialog(false);
+        setPaypalEmail("");
+        toast.success("Payout request submitted successfully!");
+      }, 0);
+      return () => clearTimeout(timer);
     }
   }, [data]);
 
@@ -207,7 +211,7 @@ export function DoctorEarnings({ earnings, payouts = [] }) {
                 <Alert>
                   <AlertCircle className="h-4 w-4" />
                   <AlertDescription className="text-sm">
-                    Your payout request is being processed. You'll receive the
+                    Your payout request is being processed. You&apos;ll receive the
                     payment once an admin approves it. Your credits will be
                     deducted after processing.
                   </AlertDescription>

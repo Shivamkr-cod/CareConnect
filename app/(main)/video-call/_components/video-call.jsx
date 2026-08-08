@@ -13,6 +13,7 @@ const VideoCall = ({ sessionId, token }) => {
   const [isConnected, setIsConnected] = useState(false);
   const [isVideoEnabled, setIsVideoEnabled] = useState(true);
   const [isAudioEnabled, setIsAudioEnabled] = useState(true);
+  const [isPublisherReady, setIsPublisherReady] = useState(false);
 
   const sessionRef = useRef(null);
   const publisherRef = useRef(null);
@@ -64,6 +65,7 @@ const VideoCall = ({ sessionId, token }) => {
             toast.error("Error initializing your camera and microphone");
           } else {
             console.log("Publisher initialized successfully");
+            setIsPublisherReady(true);
           }
         },
       );
@@ -266,7 +268,7 @@ const VideoCall = ({ sessionId, token }) => {
                     ? "border-teal-900/30"
                     : "bg-red-900/20 border-red-900/30 text-red-400"
                 }`}
-                disabled={!publisherRef.current} // Disable if publisher not ready
+                disabled={!isPublisherReady} // Disable if publisher not ready
               >
                 {isVideoEnabled ? <Video /> : <VideoOff />}
               </Button>
@@ -280,7 +282,7 @@ const VideoCall = ({ sessionId, token }) => {
                     ? "border-teal-900/30"
                     : "bg-red-900/20 border-red-900/30 text-red-400"
                 }`}
-                disabled={!publisherRef.current} // Disable if publisher not ready
+                disabled={!isPublisherReady} // Disable if publisher not ready
               >
                 {isAudioEnabled ? <Mic /> : <MicOff />}
               </Button>
@@ -302,7 +304,7 @@ const VideoCall = ({ sessionId, token }) => {
               </p>
 
               <p className="text-muted-foreground text-sm mt-1">
-                When you're finished with your consultation, click the red
+                When you&apos;re finished with your consultation, click the red
                 button to end the call
               </p>
             </div>

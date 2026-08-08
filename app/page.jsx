@@ -96,7 +96,7 @@ export default function Home() {
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-muted-foreground">
+                    <p className="text-muted-foreground text-lg leading-relaxed">
                       {features.description}
                     </p>
                   </CardContent>
@@ -141,7 +141,7 @@ export default function Home() {
                           <Check className="h-4 w-4 text-teal-400" />
                         </div>
                         <p
-                          className="text-muted-foreground"
+                          className="text-muted-foreground text-lg leading-relaxed"
                           dangerouslySetInnerHTML={{ __html: benefit }}
                         />
                       </li>
@@ -195,7 +195,7 @@ export default function Home() {
                       </div>
                     </div>
 
-                    <p className="text-muted-foreground">
+                    <p className="text-muted-foreground text-lg leading-relaxed">
                       &quot;{testimonial.quote}&quot;
                     </p>
                   </CardContent>

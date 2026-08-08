@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Outfit } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -42,19 +43,18 @@ export default function RootLayout({ children }) {
               <div>
                 <h4 className="font-semibold text-white mb-4">Services</h4>
                 <ul className="space-y-2 text-muted-foreground">
-                  <li><a href="#" className="hover:text-teal-400 transition-colors">Video Consultations</a></li>
-                  <li><a href="#" className="hover:text-teal-400 transition-colors">Specialist Referrals</a></li>
-                  <li><a href="#" className="hover:text-teal-400 transition-colors">Prescription Refills</a></li>
-                  <li><a href="#" className="hover:text-teal-400 transition-colors">Mental Health</a></li>
+                  <li><Link href="/sign-in" className="hover:text-teal-400 transition-colors">Video Consultations</Link></li>
+                  <li><Link href="/sign-in" className="hover:text-teal-400 transition-colors">Specialist Referrals</Link></li>
+                  <li><Link href="/sign-in" className="hover:text-teal-400 transition-colors">Prescription Refills</Link></li>
+                  <li><Link href="/sign-in" className="hover:text-teal-400 transition-colors">Mental Health</Link></li>
                 </ul>
               </div>
               <div>
-                <h4 className="font-semibold text-white mb-4">Company</h4>
+                <h4 className="font-semibold text-white mb-4">Contact Us</h4>
                 <ul className="space-y-2 text-muted-foreground">
-                  <li><a href="#" className="hover:text-teal-400 transition-colors">About Us</a></li>
-                  <li><a href="#" className="hover:text-teal-400 transition-colors">Careers</a></li>
-                  <li><a href="#" className="hover:text-teal-400 transition-colors">Press</a></li>
-                  <li><a href="#" className="hover:text-teal-400 transition-colors">Contact</a></li>
+                  <li><a href="mailto:support@careconnect.health" className="hover:text-teal-400 transition-colors">support@careconnect.health</a></li>
+                  <li><a href="tel:+15551234567" className="hover:text-teal-400 transition-colors">+1 (555) 123-4567</a></li>
+                  <li>123 Health Ave, Medical District<br/>New York, NY 10001</li>
                 </ul>
               </div>
               <div>
