@@ -60,7 +60,7 @@ export default function Home() {
 
             <div className="relative h-[300px] sm:h-[400px] lg:h-[620px]">
               <Image
-                src="/banner2.png"
+                src="/banner.png"
                 alt="Doctor consultation"
                 fill
                 priority
