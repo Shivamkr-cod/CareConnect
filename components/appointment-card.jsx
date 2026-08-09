@@ -242,26 +242,26 @@ export function AppointmentCard({
                 {otherPartyIcon}
               </div>
               <div>
-                <h3 className="font-medium text-white">
+                <h3 className="font-semibold text-lg text-white">
                   {userRole === "DOCTOR"
                     ? otherParty.name
                     : `Dr. ${otherParty.name}`}
                 </h3>
                 {userRole === "DOCTOR" && (
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-base text-muted-foreground">
                     {otherParty.email}
                   </p>
                 )}
                 {userRole === "PATIENT" && (
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-base text-muted-foreground">
                     {otherParty.specialty}
                   </p>
                 )}
-                <div className="flex items-center mt-2 text-sm text-muted-foreground">
+                <div className="flex items-center mt-2 text-base text-muted-foreground">
                   <Calendar className="h-4 w-4 mr-1" />
                   <span>{formatDateTime(appointment.startTime)}</span>
                 </div>
-                <div className="flex items-center mt-1 text-sm text-muted-foreground">
+                <div className="flex items-center mt-1 text-base text-muted-foreground">
                   <Clock className="h-4 w-4 mr-1" />
                   <span>
                     {formatTime(appointment.startTime)} -{" "}

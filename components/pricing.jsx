@@ -7,6 +7,11 @@ const Pricing = () => {
     <Card className="border-teal-900/30 shadow-lg bg-gradient-to-b from-teal-950/30 to-transparent">
       <CardContent className="p-6 md:p-8">
         <PricingTable
+          appearance={{
+            variables: {
+              fontSize: "1.1rem",
+            },
+          }}
           checkoutProps={{
             appearance: {
               elements: {

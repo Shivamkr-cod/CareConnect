@@ -10,7 +10,7 @@ import { Toaster } from "sonner";
 const outfit = Outfit({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "CareConnect- Doctor Appointment App",
+  title: "CareConnect",
   description: "Connect with doctors anytime, anywhere",
 };
 
@@ -52,7 +52,7 @@ export default function RootLayout({ children }) {
               <div>
                 <h4 className="font-semibold text-white mb-4">Contact Us</h4>
                 <ul className="space-y-2 text-muted-foreground">
-                  <li><a href="mailto:support@careconnect.health" className="hover:text-teal-400 transition-colors">support@careconnect.health</a></li>
+                  <li><a href="mailto:support@CareConnect.health" className="hover:text-teal-400 transition-colors">support@CareConnect.health</a></li>
                   <li><a href="tel:+15551234567" className="hover:text-teal-400 transition-colors">+1 (555) 123-4567</a></li>
                   <li>123 Health Ave, Medical District<br/>New York, NY 10001</li>
                 </ul>
