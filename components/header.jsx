@@ -87,13 +87,13 @@ const Header = async () => {
             )}
 
             {user?.role === "PATIENT" && (
-              <Link href="/appointment">
+              <Link href="/appointments">
                 <Button
                   variant="outline"
                   className="hidden md:inline-flex items-center gap-2"
                 >
                   <Calendar className="h-4 w-4" />
-                  My Appointment
+                  My Appointments
                 </Button>
 
                 <Button variant="ghost" className="md:hidden w-10 h-10 p-0">

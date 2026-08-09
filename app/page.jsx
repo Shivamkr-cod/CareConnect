@@ -64,6 +64,7 @@ export default function Home() {
                 alt="Medical Professional Preparing"
                 fill
                 priority
+                sizes="(max-width: 768px) 100vw, 50vw"
                 className="object-cover rounded-2xl shadow-2xl"
               />
             </div>
