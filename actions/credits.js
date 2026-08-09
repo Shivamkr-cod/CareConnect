@@ -96,10 +96,6 @@ export async function checkAndAllocateCredits(user) {
       return updatedUser;
     });
 
-    revalidatePath("/");
-    revalidatePath("/doctors");
-    revalidatePath("/appointments");
-
     return updatedUser;
   } catch (error) {
     console.error(
