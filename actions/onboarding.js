@@ -104,7 +104,7 @@ export async function getCurrentUser() {
   const { userId } = await auth();
 
   if (!userId) {
-    throw new Error("Unauthorized");
+    return null;
   }
 
   try {
