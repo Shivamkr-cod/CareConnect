@@ -5,30 +5,30 @@ import { revalidatePath } from "next/cache";
 import { db } from "@/lib/prisma";
 
 export async function setUserRole(formData) {
-  const { userId } = await auth();
-
-  if (!userId) {
-    throw new Error("Unauthorized");
-  }
-
-  // Find user in our database
-  const user = await db.user.findUnique({
-    where: {
-      clerkUserId: userId,
-    },
-  });
-
-  if (!user) {
-    throw new Error("User not found in database");
-  }
-
-  const role = formData.get("role");
-
-  if (!role || !["PATIENT", "DOCTOR"].includes(role)) {
-    throw new Error("Invalid role selection");
-  }
-
   try {
+    const { userId } = await auth();
+
+    if (!userId) {
+      return { success: false, error: "Unauthorized" };
+    }
+
+    // Find user in our database
+    const user = await db.user.findUnique({
+      where: {
+        clerkUserId: userId,
+      },
+    });
+
+    if (!user) {
+      return { success: false, error: "User not found in database. Please refresh the page to try again." };
+    }
+
+    const role = formData.get("role");
+
+    if (!role || !["PATIENT", "DOCTOR"].includes(role)) {
+      return { success: false, error: "Invalid role selection" };
+    }
+
     // ===========================
     // PATIENT
     // ===========================
