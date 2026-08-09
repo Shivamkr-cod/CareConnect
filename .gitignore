@@ -49,3 +49,8 @@ next-env.d.ts
 .agents/
 .claude/
 .windsurf/
+
+# test scripts
+test-db.js
+test-neon-pool.js
+test-parse.js
