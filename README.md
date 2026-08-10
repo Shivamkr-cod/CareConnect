@@ -32,19 +32,7 @@ CareConnect is a modern healthcare platform built to bridge the gap between pati
 
 CareConnect uses a modern Full-Stack Next.js architecture (App Router) combined with Server Actions for secure and seamless data fetching.
 
-```mermaid
-graph TD
-    Client["Client App (Next.js / Tailwind UI)"] -->|"HTTP / React Server Components"| Server["Next.js Server Actions"]
-    Client -->|"Auth State"| Clerk["Clerk Auth"]
-    Client -->|"Video/Audio Call"| Vonage["Vonage SDK"]
-    Server -->|"ORM Queries"| DB[("Neon Postgres DB")]
-    Server -->|"Verify Auth"| Clerk
-```
-
-- **Frontend:** Built with Next.js App Router, using Server Components for performance and Client Components for interactivity. UI is styled with Tailwind CSS and shadcn/ui.
-- **Authentication:** Clerk handles user sessions securely via `middleware.js`, protecting both client pages and Server Actions.
-- **Backend / Database:** Next.js Server Actions act as the backend API, securely querying the Neon Serverless Postgres database using Prisma ORM.
-- **Real-Time Consultations:** The Vonage SDK integrates directly into the client to enable seamless patient-doctor video/audio consultations.
+👉 **[View the detailed Architecture Diagram & Step-by-Step Breakdown](./ARCHITECTURE.md)**
 
 ## 📂 Folder Structure
 
