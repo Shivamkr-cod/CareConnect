@@ -1,36 +1,104 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# CareConnect
 
-## Getting Started
+CareConnect is a modern healthcare platform built to bridge the gap between patients and medical professionals. It enables patients to easily book appointments, consult with doctors, and manage their health journey. For doctors, it provides tools to manage their availability, handle appointments, and track earnings.
 
-First, run the development server:
+## 🚀 Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+### For Patients
+- **Find Specialists:** Browse through a list of certified doctors by specialty.
+- **Book Appointments:** Real-time scheduling based on the doctor's availability.
+- **Consultations:** Integrated communication and seamless meeting experiences (powered by Vonage).
+- **Credits System:** Manage your platform credits to book appointments efficiently.
+
+### For Doctors
+- **Availability Management:** Set your daily working hours seamlessly. 
+- **Appointment Tracking:** View upcoming, completed, and canceled appointments.
+- **Payouts Dashboard:** Track earnings (credits) and request payouts.
+
+### For Admins
+- **Manage Payouts:** Review and approve doctor payout requests securely.
+
+## 🛠️ Tech Stack
+
+- **Framework:** [Next.js 16](https://nextjs.org/) (App Router)
+- **Styling:** [Tailwind CSS 4](https://tailwindcss.com/) & [shadcn/ui](https://ui.shadcn.com/)
+- **Authentication:** [Clerk](https://clerk.com/)
+- **Database:** [Neon (Serverless Postgres)](https://neon.tech/)
+- **ORM:** [Prisma ORM](https://www.prisma.io/)
+- **Communication:** [Vonage SDK](https://www.vonage.com/)
+- **Forms & Validation:** React Hook Form & Zod
+
+## 🏗️ Architecture & How It Works
+
+CareConnect uses a modern Full-Stack Next.js architecture (App Router) combined with Server Actions for secure and seamless data fetching.
+
+```mermaid
+graph TD
+    Client["Client App (Next.js / Tailwind UI)"] -->|"HTTP / React Server Components"| Server["Next.js Server Actions"]
+    Client -->|"Auth State"| Clerk["Clerk Auth"]
+    Client -->|"Video/Audio Call"| Vonage["Vonage SDK"]
+    Server -->|"ORM Queries"| DB[("Neon Postgres DB")]
+    Server -->|"Verify Auth"| Clerk
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Frontend:** Built with Next.js App Router, using Server Components for performance and Client Components for interactivity. UI is styled with Tailwind CSS and shadcn/ui.
+- **Authentication:** Clerk handles user sessions securely via `middleware.js`, protecting both client pages and Server Actions.
+- **Backend / Database:** Next.js Server Actions act as the backend API, securely querying the Neon Serverless Postgres database using Prisma ORM.
+- **Real-Time Consultations:** The Vonage SDK integrates directly into the client to enable seamless patient-doctor video/audio consultations.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## 📂 Folder Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```text
+CareConnect/
+├── actions/         # Server Actions (Next.js backend logic)
+├── app/             # Next.js App Router (Pages, Layouts)
+│   └── (main)/      # Main application routes (Dashboard, Appointments, etc.)
+├── components/      # Reusable UI Components (shadcn/ui, custom components)
+├── hooks/           # Custom React hooks (e.g., useFetch)
+├── lib/             # Utility functions and Prisma Client setup
+├── prisma/          # Database Schema and Migrations
+├── public/          # Static assets (images, icons)
+├── .env.example     # Example environment variables
+├── middleware.js    # Clerk Authentication middleware
+└── package.json     # Project dependencies and scripts
+```
 
-## Learn More
+## ⚙️ Getting Started
 
-To learn more about Next.js, take a look at the following resources:
+### Prerequisites
+Make sure you have [Node.js](https://nodejs.org/) installed on your machine.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Installation
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/your-username/CareConnect.git
+   cd CareConnect
+   ```
 
-## Deploy on Vercel
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+3. **Set up Environment Variables:**
+   Rename the `.env.example` file to `.env` and fill in your keys:
+   ```bash
+   cp .env.example .env
+   ```
+   *Note: You will need API keys for Clerk, Vonage, and a connection string for Neon Database.*
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+4. **Initialize the Database:**
+   ```bash
+   npx prisma generate
+   npx prisma db push
+   ```
+
+5. **Run the development server:**
+   ```bash
+   npm run dev
+   ```
+   Open [http://localhost:3000](http://localhost:3000) with your browser to see the application in action.
+
+## 🤝 Contributing
+Contributions, issues, and feature requests are welcome! Feel free to check the issues page if you want to contribute.

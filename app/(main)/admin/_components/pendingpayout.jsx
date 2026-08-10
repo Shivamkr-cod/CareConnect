@@ -39,7 +39,7 @@ export function PendingPayouts({ payouts }) {
   const [showApproveDialog, setShowApproveDialog] = useState(false);
 
   // Custom hook for approve payout server action
-  const { loading, data, fn: submitApproval } = useFetch(approvePayout);
+  const { loading, fn: submitApproval } = useFetch(approvePayout);
 
   // Handle view details
   const handleViewDetails = (payout) => {
@@ -59,16 +59,13 @@ export function PendingPayouts({ payouts }) {
     const formData = new FormData();
     formData.append("payoutId", selectedPayout.id);
 
-    await submitApproval(formData);
-  };
-
-  useEffect(() => {
-    if (data?.success) {
+    const res = await submitApproval(formData);
+    if (res?.success) {
       setShowApproveDialog(false);
       setSelectedPayout(null);
       toast.success("Payout approved successfully!");
     }
-  }, [data]);
+  };
 
   const closeDialogs = () => {
     setSelectedPayout(null);
@@ -331,7 +328,7 @@ export function PendingPayouts({ payouts }) {
                   <ul className="mt-2 space-y-1 list-disc pl-4">
                     <li>
                       Deduct {selectedPayout.credits} credits from Dr.{" "}
-                      {selectedPayout.doctor.name}'s account
+                      {selectedPayout.doctor.name}&apos;s account
                     </li>
                     <li>Mark the payout as PROCESSED</li>
                     <li>This action cannot be undone</li>
